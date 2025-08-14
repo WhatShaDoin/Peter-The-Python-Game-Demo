@@ -5,69 +5,102 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Lesson 1 — add(a,b)</title>
 
-  <!-- Your styles -->
   <link rel="stylesheet" href="../assets/styles.css">
-
-  <!-- Pin PyScript to a specific release -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
   <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
-
-  <!-- HUD helper -->
   <script defer src="../assets/app.js"></script>
 </head>
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+
+    <!-- Peter image (upload: assets/img/peter-lesson1.png) -->
+    <img class="peter-hero" src="../assets/img/peter-lesson1.png" alt="Peter the Python at a laptop">
+
     <h1>Lesson 1: add(a,b)</h1>
+    <p class="small"><strong>Why?</strong> A function is a named trick. When we teach Peter <code>add(a, b)</code>, he can add any two numbers without thinking hard each time.</p>
 
     <div class="hud">
       <div id="stars" class="badge">⭐ Stars: 0</div>
       <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
     </div>
 
-    <textarea id="editor" class="editor"># TODO: write add(a,b)
-def add(a, b):
-    return a + b
-</textarea>
+    <div class="toolbar">
+      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
+      <button id="hintBtn" class="btn ghost" type="button">Show Hint</button>
+      <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
+    </div>
 
-    <p><button id="run" type="button">Run ▶</button></p>
+    <textarea id="editor" class="editor" placeholder="# Write add(a, b) so it returns the sum."></textarea>
+
+    <p>
+      <button id="run" class="btn" type="button">Run ▶</button>
+      <!-- Next Lesson button -->
+      <a class="btn ghost" href="ch2_gems.html">Next Lesson →</a>
+    </p>
     <pre id="out"></pre>
+
+    <details id="hint" style="display:none"><summary>Hint</summary>
+      <div class="small">Start with <code>def add(a, b):</code> then <code>return</code> the sum.</div>
+    </details>
+    <details id="sol" style="display:none"><summary>Solution (peek only)</summary>
+      <pre>def add(a, b):
+    return a + b</pre>
+    </details>
   </div>
 
   <script type="py">
 from js import document, localStorage
 from pyodide.ffi import create_proxy
 
+STARTER = "def add(a, b):\n    # TODO: return the sum of a and b\n    pass\n"
+
 def gi(k):
     v = localStorage.getItem(k)
-    try:
-        return int(v) if v is not None else 0
-    except:
-        return 0
+    try: return int(v) if v is not None else 0
+    except: return 0
 
 def setb(stars=None, bugs=None):
-    if stars is not None:
-        localStorage.setItem('stars', str(stars))
-    if bugs is not None:
-        localStorage.setItem('bugs', str(bugs))
-    document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
-    document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
+    if stars is not None: localStorage.setItem('stars', str(stars))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
+    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
+    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
+
+def insert_starter(evt):
+    document.getElementById('editor').value = STARTER
+
+def toggle_hint(evt):
+    h = document.getElementById('hint')
+    h.style.display = 'block' if h.style.display == 'none' else 'none'
+
+def toggle_sol(evt):
+    s = document.getElementById('sol')
+    s.style.display = 'block' if s.style.display == 'none' else 'none'
 
 def run(evt):
-    ns = {}
     src = document.getElementById('editor').value
+    if not src.strip():
+        document.getElementById('out').textContent = "Type your code first 🙂"
+        return
+    if "pass" in src:
+        document.getElementById('out').textContent = "Replace 'pass' with working code."
+        return
+    ns = {}
     try:
         exec(src, ns)
         assert 'add' in ns, "Function 'add' is missing."
-        assert ns['add'](2,3) == 5, 'add(2,3) should be 5.'
-        assert ns['add'](-1,1) == 0, 'add(-1,1) should be 0.'
-        document.getElementById('out').textContent = 'All checks passed! ⭐'
+        f = ns['add']
+        assert f(2,3) == 5, "add(2,3) should be 5."
+        assert f(-1,1) == 0, "add(-1,1) should be 0."
+        document.getElementById('out').textContent = "All checks passed! ⭐"
         setb(stars=gi('stars')+1)
     except Exception as e:
-        document.getElementById('out').textContent = 'Bug found: ' + str(e)
+        document.getElementById('out').textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
 
-# hook up the button safely via a JS proxy
+document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
+document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
+document.getElementById('solBtn').addEventListener('click', create_proxy(toggle_sol))
 document.getElementById('run').addEventListener('click', create_proxy(run))
 setb()
   </script>
