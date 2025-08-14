@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Lesson 0 — Say Hello</title>
+
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
+  <script defer src="../assets/app.js"></script>
+</head>
+<body>
+  <div class="card">
+    <a href="../index.html">← Back</a>
+
+    <!-- Peter image (use any cute one you like) -->
+    <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter waves hello">
+
+    <h1>Lesson 0: Say Hello</h1>
+
+    <div class="learnbox">
+      <h4>Why this?</h4>
+      <ul class="kids-list">
+        <li><code>print()</code> means “Peter says it out loud.” The <b>quotes</b> are Peter’s talking marks.</li>
+      </ul>
+      <h4>What you’ll type</h4>
+      <ul class="kids-list">
+        <li>Type exactly: <code>print("Hello, Python!")</code></li>
+      </ul>
+      <h4>New words & symbols</h4>
+      <div><span class="glossy">print</span> say it • <span class="glossy">" "</span> talking marks • <span class="glossy">()</span> hands that hold words</div>
+    </div>
+
+    <div class="hud">
+      <div id="stars" class="badge">⭐ Stars: 0</div>
+      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
+    </div>
+
+    <div class="toolbar">
+      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
+    </div>
+
+    <textarea id="editor" class="editor" placeholder='Type: print("Hello, Python!")'></textarea>
+
+    <p>
+      <button id="run" class="btn" type="button">Run ▶</button>
+      <a class="btn ghost" href="ch1_add.html">Next Lesson →</a>
+    </p>
+    <pre id="out"></pre>
+  </div>
+
+  <script type="py">
+from js import document, localStorage, window
+from pyodide.ffi import create_proxy
+import io, sys, re
+
+STARTER = 'print("Hello, Python!")\n'
+
+class Capture:
+    def __enter__(self):
+        self._old = sys.stdout
+        self.buf = io.StringIO()
+        sys.stdout = self.buf
+        return self.buf
+    def __exit__(self, *args):
+        sys.stdout = self._old
+
+def gi(k):
+    v = localStorage.getItem(k)
+    try: return int(v) if v is not None else 0
+    except: return 0
+
+def setb(stars=None, bugs=None):
+    if stars is not None: localStorage.setItem('stars', str(stars))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
+    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
+    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
+
+def insert_starter(evt):
+    document.getElementById('editor').value = STARTER
+
+def run(evt):
+    src = document.getElementById('editor').value
+    if not src.strip():
+        document.getElementById('out').textContent = "Type your code first 🙂"
+        return
+    try:
+        with Capture() as cap:
+            exec(src, {})
+        out = cap.getvalue().strip()
+        ok = bool(re.search(r"hello.*python", out.lower()))
+        if ok:
+            document.getElementById('out').textContent = 'All checks passed! ⭐'
+            setb(stars=gi('stars')+1)
+            window.launchConfetti()
+        else:
+            raise Exception('Make sure it prints: Hello, Python!')
+    except Exception as e:
+        document.getElementById('out').textContent = "Bug found: " + str(e)
+        setb(bugs=gi('bugs')+1)
+
+document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
+document.getElementById('run').addEventListener('click', create_proxy(run))
+setb()
+  </script>
+</body>
+</html>
