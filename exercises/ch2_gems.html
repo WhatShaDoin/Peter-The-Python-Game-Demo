@@ -14,29 +14,22 @@
   <div class="card">
     <a href="../index.html">← Back</a>
 
-    <!-- Peter image (WEBP) -->
     <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with treasure chest">
 
     <h1>Lesson 2: Treasure Chest (lists)</h1>
 
-    <div class="learnbox">
+    <div class="learnbox" id="explain2">
       <h4>Why this?</h4>
       <ul class="kids-list">
-        <li>A <b>list</b> is a treasure chest that holds many items. We’ll add a new gem and learn to peek at the first and last spots.</li>
+        <li>A <b>list</b> is a treasure chest that holds many items. We’ll add a new gem and peek at the first and last spots.</li>
       </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
         <li>Create a list, append <code>"diamond"</code>, then <code>print</code> the first and last items.</li>
       </ul>
-      <h4>New words & symbols</h4>
-      <div><span class="glossy">list</span> treasure chest • <span class="glossy">append</span> put one more item in</div>
-      <div><span class="glossy">[]</span> the chest • <span class="glossy">[-1]</span> the back of the chest (last item)</div>
-      <h4>Common oopsies</h4>
-      <ul class="kids-list">
-        <li>Forgetting quotes around <code>diamond</code>.</li>
-        <li>Typing <code>gems[3]</code> instead of <code>gems[-1]</code> (we want the last one).</li>
-        <li>Printing the list but not the two items.</li>
-      </ul>
+      <div class="ttsbar">
+        <button class="btn ghost" onclick="readBySelector('#explain2')">🔊 Read this aloud</button>
+      </div>
     </div>
 
     <div class="hud">
@@ -50,7 +43,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder="# 1) Create a list named gems\n# 2) Append 'diamond'\n# 3) Print first and last"></textarea>
+    <textarea id="editor" class="editor" placeholder="# 1) Make list\n# 2) Append 'diamond'\n# 3) Print first and last"></textarea>
 
     <p><button id="run" class="btn" type="button">Run ▶</button></p>
     <pre id="out"></pre>
@@ -58,7 +51,7 @@
     <details id="hint" style="display:none"><summary>Hint</summary>
       <div class="small"><code>gems = ["ruby","emerald","sapphire"]</code> → <code>gems.append("diamond")</code> → <code>print(gems[0], gems[-1])</code></div>
     </details>
-    <details id="sol" style="display:none"><summary>Solution (peek only)</summary>
+    <details id="sol" style="display:none"><summary>Solution (exact)</summary>
       <pre>gems = ["ruby", "emerald", "sapphire"]
 gems.append("diamond")
 print(gems[0], gems[-1])</pre>
@@ -70,7 +63,7 @@ from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys
 
-STARTER = 'gems = ["ruby", "emerald", "sapphire"]\n# TODO: append "diamond" then print first and last\n# print(gems[0], gems[-1])\n'
+STARTER = 'gems = ["ruby", "emerald", "sapphire"]\n# add diamond, then print first and last\n# print(gems[0], gems[-1])\n'
 
 class Capture:
     def __enter__(self):
@@ -108,31 +101,27 @@ def run(evt):
     if not src.strip():
         document.getElementById('out').textContent = "Type your code first 🙂"
         return
-    ns = {}
     try:
+        ns = {}
         with Capture() as cap:
             exec(src, ns)
         out = cap.getvalue().strip()
 
-        assert 'gems' in ns and isinstance(ns['gems'], list), "You need a list named gems."
+        # Basic checks
+        assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
         assert 'diamond' in ns['gems'], "Append 'diamond' to the list."
+        # Must print first and last on one line (two tokens)
         parts = out.split()
-        assert len(parts) >= 2, "Print the first and last items."
-        assert parts[0].lower() == 'ruby', "First should be ruby."
-        assert parts[-1].lower() == 'diamond', "Last should be diamond."
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\nruby diamond"
+        assert len(parts) >= 2 and parts[0].lower()=='ruby' and parts[-1].lower()=='diamond', \
+            "Please print first and last: ruby diamond"
 
-        document.getElementById('out').textContent = "All checks passed! ⭐"
+        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1)
-        window.launchConfetti()  # 🎉
+        window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent = "Bug found: " + str(e)
+        document.getElementById('out').textContent += f"\n\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
-
-# Ctrl+Enter shortcut
-def on_key(evt):
-    if evt.ctrlKey and evt.key == "Enter":
-        run(evt)
-document.getElementById('editor').addEventListener('keydown', create_proxy(on_key))
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
 document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
