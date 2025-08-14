@@ -13,7 +13,8 @@
 html,body{margin:0;padding:0}
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,emoji;
-  background:var(--bg); color:var(--ink);
+  background:var(--bg);
+  color:var(--ink);
 }
 
 .container{max-width:980px;margin:2rem auto;padding:0 1rem}
@@ -87,3 +88,39 @@ pre#out{
 @media (max-width:700px){ .peter-hero{float:none;display:block;margin:.5rem auto} }
 
 .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
+
+/* --- Teaching helpers --- */
+.learnbox{
+  border:1px dashed #c7cdd6;
+  background:#f8fafc;
+  border-radius:12px;
+  padding:.75rem;
+  margin:.75rem 0;
+}
+.learnbox h4{margin:.2rem 0 .4rem;font-size:1rem}
+.kids-list{margin:.4rem 0 .2rem;padding-left:1.1rem}
+.kids-list li{margin:.2rem 0}
+.callout{
+  background:#fff7ed;
+  border:1px solid #f3d3b0;
+  border-radius:10px;
+  padding:.5rem .65rem;
+  margin:.6rem 0;
+  color:#8a5a22;
+}
+.glossy{
+  display:inline-block;
+  background:#eef2ff;
+  border-radius:999px;
+  padding:.2rem .55rem;
+  margin:.15rem .25rem .15rem 0;
+  font-size:.85rem;
+}
+.hr{height:1px;background:#e5e7eb;margin:.75rem 0}
+.shortcut{
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  background:#f3f4f6;
+  border:1px solid #e5e7eb;
+  border-radius:6px;
+  padding:.1rem .35rem;
+}
