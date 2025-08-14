@@ -36,15 +36,15 @@ gems.append("diamond")
 print(gems[0], gems[-1])
 </textarea>
 
-    <p><button id="run">Run ▶</button></p>
+    <p><button id="run" type="button">Run ▶</button></p>
     <pre id="out"></pre>
   </div>
 
-  <py-script>
+  <script type="py">
 from js import document, localStorage
+from pyodide.ffi import create_proxy
 import io, sys
 
-# Capture print() output
 class Capture:
     def __enter__(self):
         self._old = sys.stdout
@@ -77,7 +77,6 @@ def run(evt):
             exec(src, ns)
         out = cap.getvalue().strip()
 
-        # Tests
         assert 'gems' in ns and isinstance(ns['gems'], list), "You need a list named gems."
         assert 'diamond' in ns['gems'], "You must append 'diamond' to the list."
         parts = out.split()
@@ -91,8 +90,8 @@ def run(evt):
         document.getElementById('out').textContent = 'Bug found: ' + str(e)
         setb(bugs=gi('bugs')+1)
 
-document.getElementById('run').addEventListener('click', run)
+document.getElementById('run').addEventListener('click', create_proxy(run))
 setb()
-  </py-script>
+  </script>
 </body>
 </html>
