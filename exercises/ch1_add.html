@@ -14,7 +14,6 @@
   <div class="card">
     <a href="../index.html">← Back</a>
 
-    <!-- Peter image (WEBP) -->
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter the Python at a laptop">
 
     <h1>Lesson 1: add(a,b)</h1>
@@ -22,20 +21,18 @@
     <div class="learnbox">
       <h4>Why this?</h4>
       <ul class="kids-list">
-        <li>A <b>function</b> is a named trick. Teach Peter <code>add(a, b)</code> once, and he can add any two numbers.</li>
+        <li>A <b>function</b> is a named trick. Teach Peter once; he can do it forever.</li>
       </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make a function named <code>add</code> that <b>returns</b> the sum.</li>
+        <li>Make <code>add(a, b)</code> that gives the answer back. <b>Printing</b> is okay for now; <b>return</b> is the pro way.</li>
       </ul>
       <h4>New words & symbols</h4>
-      <div><span class="glossy">function</span> named trick • <span class="glossy">return</span> give back an answer</div>
-      <div><span class="glossy">()</span> Peter’s hands that hold the inputs</div>
+      <div><span class="glossy">return</span> give back • <span class="glossy">()</span> hands that hold the numbers</div>
       <h4>Common oopsies</h4>
       <ul class="kids-list">
-        <li>Using <code>print</code> instead of <code>return</code>.</li>
-        <li>Forgetting the colon <code>:</code> after <code>def add(a, b)</code>.</li>
-        <li>Indentation not lined up (use two spaces or the Tab key).</li>
+        <li>Only printing inside the function (works here, but later we’ll use <code>return</code>).</li>
+        <li>Forgetting the colon <code>:</code> or indentation.</li>
       </ul>
     </div>
 
@@ -50,7 +47,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder="# Write add(a, b) so it returns the sum."></textarea>
+    <textarea id="editor" class="editor" placeholder="# Make add(a, b). Print OR return a+b."></textarea>
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
@@ -59,7 +56,7 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">Start with <code>def add(a, b):</code> then <code>return</code> the sum.</div>
+      <div class="small">Start with <code>def add(a, b):</code> then either <code>print(a+b)</code> or <code>return a+b</code>.</div>
     </details>
     <details id="sol" style="display:none"><summary>Solution (peek only)</summary>
       <pre>def add(a, b):
@@ -70,8 +67,18 @@
   <script type="py">
 from js import document, localStorage, window
 from pyodide.ffi import create_proxy
+import io, sys
 
-STARTER = "def add(a, b):\n    # TODO: return the sum of a and b\n    pass\n"
+STARTER = "def add(a, b):\n    # print(a+b)  # OK for now\n    # return a + b  # pro way\n    pass\n"
+
+class Capture:
+    def __enter__(self):
+        self._old = sys.stdout
+        self.buf = io.StringIO()
+        sys.stdout = self.buf
+        return self.buf
+    def __exit__(self, *args):
+        sys.stdout = self._old
 
 def gi(k):
     v = localStorage.getItem(k)
@@ -95,6 +102,16 @@ def toggle_sol(evt):
     s = document.getElementById('sol')
     s.style.display = 'block' if s.style.display == 'none' else 'none'
 
+def ok_result_or_print(f, a, b, want):
+    # Accept either returned value OR printed value
+    with Capture() as cap:
+        res = f(a,b)
+    out = cap.getvalue().strip()
+    # Look for the number in the printed output
+    printed_ok = str(want) in out.replace(',', ' ').split()
+    returned_ok = (res == want)
+    return printed_ok or returned_ok
+
 def run(evt):
     src = document.getElementById('editor').value
     if not src.strip():
@@ -108,11 +125,14 @@ def run(evt):
         exec(src, ns)
         assert 'add' in ns, "Function 'add' is missing."
         f = ns['add']
-        assert f(2,3) == 5, "add(2,3) should be 5."
-        assert f(-1,1) == 0, "add(-1,1) should be 0."
+        assert ok_result_or_print(f, 2, 3, 5), "add(2,3) should be 5."
+        assert ok_result_or_print(f, -1, 1, 0), "add(-1,1) should be 0."
         document.getElementById('out').textContent = "All checks passed! ⭐"
         setb(stars=gi('stars')+1)
-        window.launchConfetti()  # 🎉
+        window.launchConfetti()
+        # Coach toward 'return'
+        if "return" not in src:
+            document.getElementById('out').textContent += " (Great! Next try using return.)"
     except Exception as e:
         document.getElementById('out').textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
