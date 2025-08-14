@@ -16,24 +16,22 @@
 
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter the Python at a laptop">
 
-    <h1>Lesson 1: add(a,b)</h1>
+    <h1>Lesson 1: add(a, b)</h1>
 
-    <div class="learnbox">
+    <div class="learnbox" id="explain1">
       <h4>Why this?</h4>
       <ul class="kids-list">
         <li>A <b>function</b> is a named trick. Teach Peter once; he can do it forever.</li>
       </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make <code>add(a, b)</code> that gives the answer back. <b>Printing</b> is okay for now; <b>return</b> is the pro way.</li>
+        <li>Make <code>add(a, b)</code> that <b>prints</b> the answer (we’ll learn <code>return</code> later).</li>
       </ul>
       <h4>New words & symbols</h4>
-      <div><span class="glossy">return</span> give back • <span class="glossy">()</span> hands that hold the numbers</div>
-      <h4>Common oopsies</h4>
-      <ul class="kids-list">
-        <li>Only printing inside the function (works here, but later we’ll use <code>return</code>).</li>
-        <li>Forgetting the colon <code>:</code> or indentation.</li>
-      </ul>
+      <div><span class="glossy">function</span> named trick • <span class="glossy">print</span> say it out loud • <span class="glossy">( )</span> hands</div>
+      <div class="ttsbar">
+        <button class="btn ghost" onclick="readBySelector('#explain1')">🔊 Read this aloud</button>
+      </div>
     </div>
 
     <div class="hud">
@@ -47,7 +45,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder="# Make add(a, b). Print OR return a+b."></textarea>
+    <textarea id="editor" class="editor" placeholder="# Make add(a, b) that prints a+b"></textarea>
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
@@ -56,11 +54,11 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">Start with <code>def add(a, b):</code> then either <code>print(a+b)</code> or <code>return a+b</code>.</div>
+      <div class="small">Type:<br> <code>def add( a, b ):</code> then on the next line <code>print( a + b )</code> (notice the spaces in the explanation’s <b>( )</b> only; in code you can write <code>add(a, b)</code>).</div>
     </details>
-    <details id="sol" style="display:none"><summary>Solution (peek only)</summary>
+    <details id="sol" style="display:none"><summary>Solution (exact)</summary>
       <pre>def add(a, b):
-    return a + b</pre>
+    print(a + b)</pre>
     </details>
   </div>
 
@@ -69,7 +67,7 @@ from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys
 
-STARTER = "def add(a, b):\n    # print(a+b)  # OK for now\n    # return a + b  # pro way\n    pass\n"
+STARTER = "def add(a, b):\n    print(a + b)\n"
 
 class Capture:
     def __enter__(self):
@@ -102,46 +100,33 @@ def toggle_sol(evt):
     s = document.getElementById('sol')
     s.style.display = 'block' if s.style.display == 'none' else 'none'
 
-def ok_result_or_print(f, a, b, want):
-    # Accept either returned value OR printed value
-    with Capture() as cap:
-        res = f(a,b)
-    out = cap.getvalue().strip()
-    # Look for the number in the printed output
-    printed_ok = str(want) in out.replace(',', ' ').split()
-    returned_ok = (res == want)
-    return printed_ok or returned_ok
-
 def run(evt):
     src = document.getElementById('editor').value
     if not src.strip():
         document.getElementById('out').textContent = "Type your code first 🙂"
         return
-    if "pass" in src:
-        document.getElementById('out').textContent = "Replace 'pass' with working code."
-        return
     ns = {}
     try:
-        exec(src, ns)
-        assert 'add' in ns, "Function 'add' is missing."
-        f = ns['add']
-        assert ok_result_or_print(f, 2, 3, 5), "add(2,3) should be 5."
-        assert ok_result_or_print(f, -1, 1, 0), "add(-1,1) should be 0."
-        document.getElementById('out').textContent = "All checks passed! ⭐"
-        setb(stars=gi('stars')+1)
-        window.launchConfetti()
-        # Coach toward 'return'
-        if "return" not in src:
-            document.getElementById('out').textContent += " (Great! Next try using return.)"
-    except Exception as e:
-        document.getElementById('out').textContent = "Bug found: " + str(e)
-        setb(bugs=gi('bugs')+1)
+        with Capture() as cap:
+            exec(src, ns)
+        out = cap.getvalue().strip()
 
-# Ctrl+Enter shortcut
-def on_key(evt):
-    if evt.ctrlKey and evt.key == "Enter":
-        run(evt)
-document.getElementById('editor').addEventListener('keydown', create_proxy(on_key))
+        # require a function named add and that it prints results
+        assert 'add' in ns, "Function 'add' is missing."
+        with Capture() as cap2:
+            ns['add'](2,3)
+            ns['add'](-1,1)
+        out2 = cap2.getvalue().strip()
+        expected = "5\n0"
+        document.getElementById('out').textContent = f"Your output:\n{out2}\n\nExpected:\n{expected}"
+        assert out2 == expected, "Printed lines must be exactly:\n5 (newline) then 0"
+
+        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        setb(stars=gi('stars')+1)
+        window.launchConfetti(); window.playConfettiSound()
+    except Exception as e:
+        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
 document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
