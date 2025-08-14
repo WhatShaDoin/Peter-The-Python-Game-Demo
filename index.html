@@ -13,13 +13,15 @@
       <h1>Peter the Python Game — Demo</h1>
       <h2>A browser-based Python playground (powered by PyScript).</h2>
 
-      <p><img src="assets/img/peter-cover.webp" alt="Peter the Python cover" width="720" loading="lazy"></p>
+      <!-- Smaller cover -->
+      <p><img class="cover" src="assets/img/peter-cover.webp" alt="Peter the Python cover" loading="lazy"></p>
 
       <div class="hud">
         <div id="stars" class="badge">⭐ Stars: 0</div>
         <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
       </div>
 
+      <!-- Go Pro -->
       <p style="margin:.25rem 0 1rem">
         <a class="btn" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">
           Go Pro — Full Course ▶
@@ -44,24 +46,36 @@
         </div>
       </div>
 
-      <div class="learnbox">
-        <h4>How this works</h4>
-        <ul class="kids-list">
-          <li>Read the tiny story → it tells you what to build.</li>
-          <li>Type the code yourself (that’s how your brain learns!).</li>
-          <li>Press <span class="shortcut">Run ▶</span> (or <span class="shortcut">Ctrl+Enter</span>) to check.</li>
-          <li>Pass = ⭐. Oops = 🐞 (a clue to fix).</li>
-        </ul>
-        <div class="callout">Peter tip: Bugs aren’t bad. They’re little teachers that say “try again here!”.</div>
-      </div>
-
-      <div class="learnbox">
+      <!-- Mini Glossary (with spaced symbols) -->
+      <div class="learnbox" id="mini-glossary">
         <h4>Mini Glossary</h4>
-        <div><span class="glossy">function</span> a named trick Peter repeats</div>
-        <div><span class="glossy">argument</span> the stuff you hand to a function</div>
-        <div><span class="glossy">list</span> a treasure chest of many things</div>
-        <div><span class="glossy">return</span> give back an answer • <span class="glossy">print</span> say it out loud</div>
-        <div><span class="glossy">()</span> hands • <span class="glossy">[]</span> chest • <span class="glossy">-1</span> last spot</div>
+
+        <div class="dl">
+          <div class="dt"><span class="sym">( )</span> Parentheses</div>
+          <div class="dd">Hold things together or pass things into functions. <em>Memory:</em> Peter’s <b>hands</b>—they hold the stuff!</div>
+
+          <div class="dt"><span class="sym">[ ]</span> Square brackets</div>
+          <div class="dd">Make a list or get items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
+
+          <div class="dt"><span class="sym">{ }</span> Curly braces</div>
+          <div class="dd">Make a set or dictionary (named boxes). <em>Memory:</em> a <b>toolbox</b> with labeled drawers.</div>
+
+          <div class="dt"><span class="sym">: </span> Colon</div>
+          <div class="dd">Starts a block (like telling a helper what to do next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
+
+          <div class="dt"><span class="sym">return</span></div>
+          <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b>—send work out, answer comes back.</div>
+
+          <div class="dt"><span class="sym">print</span></div>
+          <div class="dd">Say it on the screen. <em>Memory:</em> Peter’s <b>voice</b>.</div>
+
+          <div class="dt"><span class="sym">-1</span></div>
+          <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
+        </div>
+
+        <div class="ttsbar">
+          <button class="btn ghost" onclick="readBySelector('#mini-glossary')">🔊 Read this aloud</button>
+        </div>
       </div>
 
       <div class="footer">
