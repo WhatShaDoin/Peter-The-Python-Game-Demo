@@ -1,3 +1,4 @@
+/* ===== Peter the Python Game — global styles ===== */
 :root{
   --bg:#f7fafc;        /* page background */
   --card:#ffffff;      /* card background */
@@ -32,6 +33,15 @@ h1{font-size:2rem}
 h2{font-size:1.05rem;color:var(--muted)}
 p{line-height:1.6}
 .small{font-size:.92rem;color:var(--muted)}
+
+/* Cover image size (smaller) */
+.cover{
+  max-width:560px;   /* smaller than before */
+  width:100%;
+  height:auto;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
 
 /* Buttons */
 .btn{
@@ -69,9 +79,6 @@ pre#out{
   min-height:56px;
 }
 
-/* Navigation chips */
-.nav a{background:#e5e7eb;color:#111827;padding:.35rem .6rem;border-radius:8px;text-decoration:none}
-
 /* Grids (for home page cards) */
 .grid{display:grid;gap:1rem}
 .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -79,11 +86,11 @@ pre#out{
 /* Footer */
 .footer{margin:1.25rem 0;color:var(--muted);font-size:.9rem}
 
-/* --- Peter image + lesson toolbar (fixed so it doesn't crop) --- */
+/* --- Peter image (no cut-offs) + toolbar --- */
 .peter-hero{
   float:right;
-  max-width:160px;      /* cap on wide screens */
-  width:28%;            /* scales nicely */
+  max-width:160px;
+  width:28%;
   min-width:120px;
   height:auto;
   margin:0 0 .5rem .75rem;
@@ -92,7 +99,6 @@ pre#out{
 @media (max-width:1000px){
   .peter-hero{float:none;display:block;margin:.5rem auto}
 }
-
 .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
 
 /* --- Teaching helpers --- */
@@ -130,3 +136,12 @@ pre#out{
   border-radius:6px;
   padding:.1rem .35rem;
 }
+
+/* Mini glossary layout */
+.dl{display:grid;grid-template-columns:170px 1fr;gap:.35rem .75rem;align-items:start}
+.dt{font-weight:700}
+.dd{color:var(--muted)}
+.sym{font-family:ui-monospace,Menlo,Consolas,monospace;background:#eef2ff;border:1px solid #e5e7eb;border-radius:8px;padding:.1rem .4rem;display:inline-block}
+
+/* TTS floating bar (optional) */
+.ttsbar{display:flex;gap:.5rem;align-items:center;margin:.5rem 0}
