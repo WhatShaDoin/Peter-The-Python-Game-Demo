@@ -8,7 +8,7 @@
   <!-- Your styles -->
   <link rel="stylesheet" href="../assets/styles.css">
 
-  <!-- Pin PyScript to a specific release (fixes the "raw python shows on page" issue) -->
+  <!-- Pin PyScript to a specific release -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
   <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
 
@@ -30,12 +30,13 @@ def add(a, b):
     return a + b
 </textarea>
 
-    <p><button id="run">Run ▶</button></p>
+    <p><button id="run" type="button">Run ▶</button></p>
     <pre id="out"></pre>
   </div>
 
-  <py-script>
+  <script type="py">
 from js import document, localStorage
+from pyodide.ffi import create_proxy
 
 def gi(k):
     v = localStorage.getItem(k)
@@ -66,9 +67,9 @@ def run(evt):
         document.getElementById('out').textContent = 'Bug found: ' + str(e)
         setb(bugs=gi('bugs')+1)
 
-document.getElementById('run').addEventListener('click', run)
+# hook up the button safely via a JS proxy
+document.getElementById('run').addEventListener('click', create_proxy(run))
 setb()
-  </py-script>
+  </script>
 </body>
 </html>
-     
