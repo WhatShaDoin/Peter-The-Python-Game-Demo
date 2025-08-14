@@ -14,11 +14,30 @@
   <div class="card">
     <a href="../index.html">← Back</a>
 
-    <!-- Peter image (upload: assets/img/peter-lesson2.png) -->
-    <img class="peter-hero" src="../assets/img/peter-lesson2.png" alt="Peter the Python with a treasure chest">
+    <!-- Peter image (WEBP) -->
+    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with treasure chest">
 
     <h1>Lesson 2: Treasure Chest (lists)</h1>
-    <p class="small"><strong>Why?</strong> A list is a treasure chest for many items. We’ll add a new gem and learn to grab the first and last like a pro.</p>
+
+    <div class="learnbox">
+      <h4>Why this?</h4>
+      <ul class="kids-list">
+        <li>A <b>list</b> is a treasure chest that holds many items. We’ll add a new gem and learn to peek at the first and last spots.</li>
+      </ul>
+      <h4>What you’ll type</h4>
+      <ul class="kids-list">
+        <li>Create a list, append <code>"diamond"</code>, then <code>print</code> the first and last items.</li>
+      </ul>
+      <h4>New words & symbols</h4>
+      <div><span class="glossy">list</span> treasure chest • <span class="glossy">append</span> put one more item in</div>
+      <div><span class="glossy">[]</span> the chest • <span class="glossy">[-1]</span> the back of the chest (last item)</div>
+      <h4>Common oopsies</h4>
+      <ul class="kids-list">
+        <li>Forgetting quotes around <code>diamond</code>.</li>
+        <li>Typing <code>gems[3]</code> instead of <code>gems[-1]</code> (we want the last one).</li>
+        <li>Printing the list but not the two items.</li>
+      </ul>
+    </div>
 
     <div class="hud">
       <div id="stars" class="badge">⭐ Stars: 0</div>
@@ -47,7 +66,7 @@ print(gems[0], gems[-1])</pre>
   </div>
 
   <script type="py">
-from js import document, localStorage
+from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys
 
@@ -94,17 +113,26 @@ def run(evt):
         with Capture() as cap:
             exec(src, ns)
         out = cap.getvalue().strip()
+
         assert 'gems' in ns and isinstance(ns['gems'], list), "You need a list named gems."
         assert 'diamond' in ns['gems'], "Append 'diamond' to the list."
         parts = out.split()
         assert len(parts) >= 2, "Print the first and last items."
         assert parts[0].lower() == 'ruby', "First should be ruby."
         assert parts[-1].lower() == 'diamond', "Last should be diamond."
+
         document.getElementById('out').textContent = "All checks passed! ⭐"
         setb(stars=gi('stars')+1)
+        window.launchConfetti()  # 🎉
     except Exception as e:
         document.getElementById('out').textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
+
+# Ctrl+Enter shortcut
+def on_key(evt):
+    if evt.ctrlKey and evt.key == "Enter":
+        run(evt)
+document.getElementById('editor').addEventListener('keydown', create_proxy(on_key))
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
 document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
