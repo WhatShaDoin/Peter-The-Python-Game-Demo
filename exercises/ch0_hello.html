@@ -14,22 +14,22 @@
   <div class="card">
     <a href="../index.html">← Back</a>
 
-    <!-- Peter image (use any cute one you like) -->
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter waves hello">
 
     <h1>Lesson 0: Say Hello</h1>
 
-    <div class="learnbox">
+    <div class="learnbox" id="explain0">
       <h4>Why this?</h4>
       <ul class="kids-list">
-        <li><code>print()</code> means “Peter says it out loud.” The <b>quotes</b> are Peter’s talking marks.</li>
+        <li><code>print()</code> means “Peter says it out loud.” The quotes are Peter’s talking marks.</li>
       </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
         <li>Type exactly: <code>print("Hello, Python!")</code></li>
       </ul>
-      <h4>New words & symbols</h4>
-      <div><span class="glossy">print</span> say it • <span class="glossy">" "</span> talking marks • <span class="glossy">()</span> hands that hold words</div>
+      <div class="ttsbar">
+        <button class="btn ghost" onclick="readBySelector('#explain0')">🔊 Read this aloud</button>
+      </div>
     </div>
 
     <div class="hud">
@@ -90,14 +90,15 @@ def run(evt):
             exec(src, {})
         out = cap.getvalue().strip()
         ok = bool(re.search(r"hello.*python", out.lower()))
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\nHello, Python!"
         if ok:
-            document.getElementById('out').textContent = 'All checks passed! ⭐'
+            document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
             setb(stars=gi('stars')+1)
-            window.launchConfetti()
+            window.launchConfetti(); window.playConfettiSound()
         else:
-            raise Exception('Make sure it prints: Hello, Python!')
+            raise Exception('Make sure it prints exactly: Hello, Python!')
     except Exception as e:
-        document.getElementById('out').textContent = "Bug found: " + str(e)
+        document.getElementById('out').textContent += f"\n\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
