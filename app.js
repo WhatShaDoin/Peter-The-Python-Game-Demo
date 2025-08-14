@@ -1,1 +1,0 @@
-function getInt(k){const v=localStorage.getItem(k);return v && !isNaN(v)?parseInt(v,10):0;} function initHUD(){const s=document.getElementById('stars');const b=document.getElementById('bugs');if(s)s.textContent='⭐ Stars: '+getInt('stars');if(b)b.textContent='🐞 Bugs: '+getInt('bugs');} document.addEventListener('DOMContentLoaded',initHUD);
