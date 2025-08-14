@@ -14,11 +14,30 @@
   <div class="card">
     <a href="../index.html">← Back</a>
 
-    <!-- Peter image (upload: assets/img/peter-lesson1.png) -->
-    <img class="peter-hero" src="../assets/img/peter-lesson1.png" alt="Peter the Python at a laptop">
+    <!-- Peter image (WEBP) -->
+    <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter the Python at a laptop">
 
     <h1>Lesson 1: add(a,b)</h1>
-    <p class="small"><strong>Why?</strong> A function is a named trick. When we teach Peter <code>add(a, b)</code>, he can add any two numbers without thinking hard each time.</p>
+
+    <div class="learnbox">
+      <h4>Why this?</h4>
+      <ul class="kids-list">
+        <li>A <b>function</b> is a named trick. Teach Peter <code>add(a, b)</code> once, and he can add any two numbers.</li>
+      </ul>
+      <h4>What you’ll type</h4>
+      <ul class="kids-list">
+        <li>Make a function named <code>add</code> that <b>returns</b> the sum.</li>
+      </ul>
+      <h4>New words & symbols</h4>
+      <div><span class="glossy">function</span> named trick • <span class="glossy">return</span> give back an answer</div>
+      <div><span class="glossy">()</span> Peter’s hands that hold the inputs</div>
+      <h4>Common oopsies</h4>
+      <ul class="kids-list">
+        <li>Using <code>print</code> instead of <code>return</code>.</li>
+        <li>Forgetting the colon <code>:</code> after <code>def add(a, b)</code>.</li>
+        <li>Indentation not lined up (use two spaces or the Tab key).</li>
+      </ul>
+    </div>
 
     <div class="hud">
       <div id="stars" class="badge">⭐ Stars: 0</div>
@@ -35,7 +54,6 @@
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
-      <!-- Next Lesson button -->
       <a class="btn ghost" href="ch2_gems.html">Next Lesson →</a>
     </p>
     <pre id="out"></pre>
@@ -50,7 +68,7 @@
   </div>
 
   <script type="py">
-from js import document, localStorage
+from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 
 STARTER = "def add(a, b):\n    # TODO: return the sum of a and b\n    pass\n"
@@ -94,9 +112,16 @@ def run(evt):
         assert f(-1,1) == 0, "add(-1,1) should be 0."
         document.getElementById('out').textContent = "All checks passed! ⭐"
         setb(stars=gi('stars')+1)
+        window.launchConfetti()  # 🎉
     except Exception as e:
         document.getElementById('out').textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
+
+# Ctrl+Enter shortcut
+def on_key(evt):
+    if evt.ctrlKey and evt.key == "Enter":
+        run(evt)
+document.getElementById('editor').addEventListener('keydown', create_proxy(on_key))
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
 document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
