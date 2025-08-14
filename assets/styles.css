@@ -1,4 +1,3 @@
-/* ===== Peter the Python Game — global styles ===== */
 :root{
   --bg:#f7fafc;        /* page background */
   --card:#ffffff;      /* card background */
@@ -80,12 +79,19 @@ pre#out{
 /* Footer */
 .footer{margin:1.25rem 0;color:var(--muted);font-size:.9rem}
 
-/* --- Peter image + lesson toolbar --- */
+/* --- Peter image + lesson toolbar (fixed so it doesn't crop) --- */
 .peter-hero{
-  float:right; max-width:180px; border-radius:14px;
+  float:right;
+  max-width:160px;      /* cap on wide screens */
+  width:28%;            /* scales nicely */
+  min-width:120px;
+  height:auto;
   margin:0 0 .5rem .75rem;
+  object-fit:contain;
 }
-@media (max-width:700px){ .peter-hero{float:none;display:block;margin:.5rem auto} }
+@media (max-width:1000px){
+  .peter-hero{float:none;display:block;margin:.5rem auto}
+}
 
 .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}
 
