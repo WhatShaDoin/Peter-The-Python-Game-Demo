@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Lesson 2 — Treasure Chest</title><link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"><script defer src="https://pyscript.net/latest/pyscript.js"></script><script defer src="../assets/app.js"></script></head><body><div class="card"><a href="../index.html">← Back</a><h1>Lesson 2: Treasure Chest (lists)</h1><div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div><textarea id="editor" class="editor">gems = ["ruby", "emerald", "sapphire"]
+# add a diamond to the end
+gems.append("diamond")
+# print first and last
+print(gems[0], gems[-1])</textarea><p><button id="run">Run ▶</button></p><pre id="out"></pre></div><py-script>from js import document, localStorage
+import io, sys
+class Cap:
+    def __enter__(self):
+        self.buf = io.StringIO(); self._s = sys.stdout; sys.stdout = self.buf; return self.buf
+    def __exit__(self,*_): sys.stdout = self._s
+
+def gi(k):
+    v = localStorage.getItem(k)
+    try: return int(v) if v is not None else 0
+    except: return 0
+
+def setb(stars=None, bugs=None):
+    if stars is not None: localStorage.setItem('stars', str(stars))
+    if bugs is not None: localStorage.setItem('bugs', str(bugs))
+    document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
+    document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
+
+def run(evt):
+    ns = {}
+    src = document.getElementById('editor').value
+    try:
+        with Cap() as b:
+            exec(src, ns)
+        out = b.getvalue().strip()
+        assert 'diamond' in ns.get('gems', []), "You must append 'diamond'."
+        parts = out.split()
+        assert len(parts) >= 2, 'Please print first and last items.'
+        assert parts[0].lower() == 'ruby', 'First should be ruby.'
+        assert parts[-1].lower() == 'diamond', 'Last should be diamond.'
+        document.getElementById('out').textContent = 'All checks passed! ⭐'
+        setb(stars=gi('stars')+1)
+    except Exception as e:
+        document.getElementById('out').textContent = 'Bug found: ' + str(e)
+        setb(bugs=gi('bugs')+1)
+
+document.getElementById('run').addEventListener('click', run)
+setb()</py-script></body></html>
