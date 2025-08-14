@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Practice 3 — Treasure chest remix</title>
+
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
+  <script defer src="../assets/app.js"></script>
+
+  <script>
+    addEventListener('DOMContentLoaded', () => {
+      const NEWS = ["diamond","pearl","amethyst","opal","topaz","garnet"];
+      const item = NEWS[Math.floor(Math.random()*NEWS.length)];
+      document.getElementById('newItem').textContent = item;
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <a href="../index.html">← Back</a>
+
+    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with chest">
+
+    <h1>Practice 3: Treasure chest remix</h1>
+
+    <div class="learnbox" id="explainP3">
+      <p>Add this new gem: <b><span id="newItem">diamond</span></b></p>
+      <h4>Why?</h4>
+      <ul class="kids-list"><li>A list is a treasure chest—we can add items and peek inside.</li></ul>
+      <h4>What you’ll type</h4>
+      <ul class="kids-list">
+        <li>Make a list of 3 gems, <code>append</code> the new gem (shown above), then <code>print</code> first and last.</li>
+      </ul>
+      <div class="ttsbar">
+        <button class="btn ghost" onclick="readBySelector('#explainP3')">🔊 Read this aloud</button>
+      </div>
+    </div>
+
+    <div class="hud">
+      <div id="stars" class="badge">⭐ Stars: 0</div>
+      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
+    </div>
+
+    <div class="toolbar">
+      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
+      <button id="hintBtn" class="btn ghost" type="button">Show Hint</button>
+      <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
+    </div>
+
+    <textarea id="editor" class="editor" placeholder='# Make a list, append NEW, print first & last'></textarea>
+
+    <p>
+      <button id="run" class="btn" type="button">Run ▶</button>
+      <a class="btn ghost" href="../index.html">Done → Home</a>
+    </p>
+    <pre id="out"></pre>
+
+    <details id="hint" style="display:none"><summary>Hint</summary>
+      <div class="small"><code>gems = ["ruby","emerald","sapphire"]</code> → <code>gems.append("NEW")</code> → <code>print(gems[0], gems[-1])</code></div>
+    </details>
+    <details id="sol" style="display:none"><summary>Solution (exact)</summary>
+      <pre id="solCode">gems = ["ruby", "emerald", "sapphire"]
+gems.append("NEW")
+print(gems[0], gems[-1])</pre>
+    </details>
+  </div>
+
+  <script type="py">
+from js import document, localStorage, window
+from pyodide.ffi import create_proxy
+import io, sys
+
+def gi(k):
+    v = localStorage.getItem(k)
+    try: return int(v) if v is not None else 0
+    except: return 0
+def setb(stars=None, bugs=None):
+    if stars is not None: localStorage.setItem('stars', str(stars))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
+    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
+    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
+
+NEW = document.getElementById('newItem').textContent
+STARTER = f'gems = ["ruby", "emerald", "sapphire"]\n# TODO: append "{NEW}" then print first and last\n# print(gems[0], gems[-1])\n'
+document.getElementById('solCode').textContent = f'gems = ["ruby", "emerald", "sapphire"]\ngems.append("{NEW}")\nprint(gems[0], gems[-1])'
+
+class Capture:
+    def __enter__(self):
+        self._old = sys.stdout
+        self.buf = io.StringIO()
+        sys.stdout = self.buf
+        return self.buf
+    def __exit__(self, *args):
+        sys.stdout = self._old
+
+def insert_starter(evt): document.getElementById('editor').value = STARTER
+def toggle_hint(evt):
+    h = document.getElementById('hint')
+    h.style.display = 'block' if h.style.display == 'none' else 'none'
+def toggle_sol(evt):
+    s = document.getElementById('sol')
+    s.style.display = 'block' if s.style.display == 'none' else 'none'
+
+def run(evt):
+    src = document.getElementById('editor').value
+    if not src.strip():
+        document.getElementById('out').textContent = "Type your code first 🙂"; return
+    try:
+        ns = {}
+        with Capture() as cap: exec(src, ns)
+        out = cap.getvalue().strip()
+
+        # Checks
+        assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
+        assert NEW in ns['gems'], f"Append '{NEW}' to the list."
+        parts = out.split()
+        need = f"ruby {NEW}"
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{need}"
+        assert len(parts) >= 2 and parts[0].lower()=='ruby' and parts[-1].lower()==NEW.lower(), \
+              "Print first and last: ruby NEW"
+
+        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
+    except Exception as e:
+        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        setb(bugs=gi('bugs')+1)
+
+document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
+document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
+document.getElementById('solBtn').addEventListener('click', create_proxy(toggle_sol))
+document.getElementById('run').addEventListener('click', create_proxy(run))
+setb()
+  </script>
+</body>
+</html>
