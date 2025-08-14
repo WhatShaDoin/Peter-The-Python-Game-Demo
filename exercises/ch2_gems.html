@@ -5,45 +5,53 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Lesson 2 — Treasure Chest (lists)</title>
 
-  <!-- Your styles -->
   <link rel="stylesheet" href="../assets/styles.css">
-
-  <!-- Pin PyScript to a specific release -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
   <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
-
-  <!-- HUD helper -->
   <script defer src="../assets/app.js"></script>
 </head>
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+
+    <!-- Peter image (upload: assets/img/peter-lesson2.png) -->
+    <img class="peter-hero" src="../assets/img/peter-lesson2.png" alt="Peter the Python with a treasure chest">
+
     <h1>Lesson 2: Treasure Chest (lists)</h1>
-    <p>Add a <code>diamond</code>, then print the first and last gems.</p>
+    <p class="small"><strong>Why?</strong> A list is a treasure chest for many items. We’ll add a new gem and learn to grab the first and last like a pro.</p>
 
     <div class="hud">
       <div id="stars" class="badge">⭐ Stars: 0</div>
       <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
     </div>
 
-    <textarea id="editor" class="editor"># Start with Peter's treasure chest
-gems = ["ruby", "emerald", "sapphire"]
+    <div class="toolbar">
+      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
+      <button id="hintBtn" class="btn ghost" type="button">Show Hint</button>
+      <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
+    </div>
 
-# 1) Add "diamond" to the END of the list
-gems.append("diamond")
+    <textarea id="editor" class="editor" placeholder="# 1) Create a list named gems\n# 2) Append 'diamond'\n# 3) Print first and last"></textarea>
 
-# 2) Print the FIRST and the LAST gems on one line
-print(gems[0], gems[-1])
-</textarea>
-
-    <p><button id="run" type="button">Run ▶</button></p>
+    <p><button id="run" class="btn" type="button">Run ▶</button></p>
     <pre id="out"></pre>
+
+    <details id="hint" style="display:none"><summary>Hint</summary>
+      <div class="small"><code>gems = ["ruby","emerald","sapphire"]</code> → <code>gems.append("diamond")</code> → <code>print(gems[0], gems[-1])</code></div>
+    </details>
+    <details id="sol" style="display:none"><summary>Solution (peek only)</summary>
+      <pre>gems = ["ruby", "emerald", "sapphire"]
+gems.append("diamond")
+print(gems[0], gems[-1])</pre>
+    </details>
   </div>
 
   <script type="py">
 from js import document, localStorage
 from pyodide.ffi import create_proxy
 import io, sys
+
+STARTER = 'gems = ["ruby", "emerald", "sapphire"]\n# TODO: append "diamond" then print first and last\n# print(gems[0], gems[-1])\n'
 
 class Capture:
     def __enter__(self):
@@ -56,40 +64,51 @@ class Capture:
 
 def gi(k):
     v = localStorage.getItem(k)
-    try:
-        return int(v) if v is not None else 0
-    except:
-        return 0
+    try: return int(v) if v is not None else 0
+    except: return 0
 
 def setb(stars=None, bugs=None):
-    if stars is not None:
-        localStorage.setItem('stars', str(stars))
-    if bugs is not None:
-        localStorage.setItem('bugs', str(bugs))
-    document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
-    document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
+    if stars is not None: localStorage.setItem('stars', str(stars))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
+    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
+    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
+
+def insert_starter(evt):
+    document.getElementById('editor').value = STARTER
+
+def toggle_hint(evt):
+    h = document.getElementById('hint')
+    h.style.display = 'block' if h.style.display == 'none' else 'none'
+
+def toggle_sol(evt):
+    s = document.getElementById('sol')
+    s.style.display = 'block' if s.style.display == 'none' else 'none'
 
 def run(evt):
-    ns = {}
     src = document.getElementById('editor').value
+    if not src.strip():
+        document.getElementById('out').textContent = "Type your code first 🙂"
+        return
+    ns = {}
     try:
         with Capture() as cap:
             exec(src, ns)
         out = cap.getvalue().strip()
-
         assert 'gems' in ns and isinstance(ns['gems'], list), "You need a list named gems."
-        assert 'diamond' in ns['gems'], "You must append 'diamond' to the list."
+        assert 'diamond' in ns['gems'], "Append 'diamond' to the list."
         parts = out.split()
-        assert len(parts) >= 2, "Please print the first and last items."
-        assert parts[0].lower() == 'ruby', "First printed item should be ruby."
-        assert parts[-1].lower() == 'diamond', "Last printed item should be diamond."
-
-        document.getElementById('out').textContent = 'All checks passed! ⭐'
+        assert len(parts) >= 2, "Print the first and last items."
+        assert parts[0].lower() == 'ruby', "First should be ruby."
+        assert parts[-1].lower() == 'diamond', "Last should be diamond."
+        document.getElementById('out').textContent = "All checks passed! ⭐"
         setb(stars=gi('stars')+1)
     except Exception as e:
-        document.getElementById('out').textContent = 'Bug found: ' + str(e)
+        document.getElementById('out').textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
 
+document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
+document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
+document.getElementById('solBtn').addEventListener('click', create_proxy(toggle_sol))
 document.getElementById('run').addEventListener('click', create_proxy(run))
 setb()
   </script>
