@@ -1,1 +1,47 @@
-<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Peter the Python — Interactive Lessons</title><link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"><script defer src="https://pyscript.net/latest/pyscript.js"></script><script defer src="assets/app.js"></script></head><body><div class="card"><h1>Peter the Python — Interactive Lessons</h1><p>Earn ⭐ stars by passing tests. Catch 🐞 bugs, learn, and try again!</p><div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div><p><a href="exercises/ch1_add.html">Lesson 1: add(a,b)</a> • <a href="exercises/ch2_gems.html">Lesson 2: Treasure Chest</a></p></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Peter the Python Game — Demo</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Peter the Python Game — Demo</h1>
+      <h2>A browser-based Python playground (powered by PyScript).</h2>
+
+      <div class="hud">
+        <div id="stars" class="badge">⭐ Stars: 0</div>
+        <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
+      </div>
+
+      <!-- Go Pro button -->
+      <p style="margin:.25rem 0 1rem">
+        <a class="btn" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">
+          Go Pro — Full Course ▶
+        </a>
+      </p>
+
+      <div class="grid cols-2" style="margin-top:1rem">
+        <div class="card">
+          <h3>Lesson 1: add(a, b)</h3>
+          <p class="small">Why? Functions are named tricks. Today we teach Peter a tiny math trick so he can add treasures fast.</p>
+          <a class="btn" href="exercises/ch1_add.html">Start ▶</a>
+        </div>
+        <div class="card">
+          <h3>Lesson 2: Treasure Chest (lists)</h3>
+          <p class="small">Why? A list is a treasure chest. Peter learns to add a gem and peek first/last!</p>
+          <a class="btn" href="exercises/ch2_gems.html">Start ▶</a>
+        </div>
+      </div>
+
+      <div class="footer">
+        Progress saves to your browser (localStorage). Python is a trademark of the PSF.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
