@@ -3,61 +3,40 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lesson 0 — Say Hello | Peter the Python Game</title>
-  <meta name="description" content="Kid-friendly Python Lesson 0: learn print() by making Peter say 'Hello, Python!'. Read-aloud and instant feedback with stars and bugs.">
-
-  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html">
-
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Lesson 0 — Say Hello">
-  <meta property="og:description" content="Make Peter talk with print().">
-  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html">
-  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Lesson 0 — Say Hello">
-  <meta name="twitter:description" content="Make Peter say 'Hello, Python!' with print().">
-  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-
-  <!-- JSON-LD: LearningResource -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LearningResource",
-    "name":"Lesson 0 — Say Hello",
-    "learningResourceType":"Lesson",
-    "description":"Kid-friendly Python: learn print() by saying 'Hello, Python!'",
-    "educationalLevel":"Beginner",
-    "inLanguage":"en",
-    "isAccessibleForFree":"true",
-    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html"
-  }
+  <title>Lesson 0 — Say Hello</title>
+  <meta name="description" content="First Python: make Peter talk with print().">
+  <link rel="stylesheet" href="../assets/styles.css?v=4">
+  <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
+  <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js"></script>
+  <script>
+    // Read-aloud helper
+    window.readBySelector ||= function(sel){
+      const el = document.querySelector(sel); if(!el) return;
+      const text = el.innerText.replace(/\s+/g,' ').trim();
+      if('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(text)); }
+    };
+    // Keep starter/solution in JS (Python never parses these multi-lines)
+    window.L0_START = `# Make Peter speak!
+print("Hello, Peter!")  # change the message if you want
+`;
+    window.L0_SOLN = `print("Hello, Peter!")`;
   </script>
-
-  <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
-  <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
-  <script defer src="../assets/app.js"></script>
 </head>
 <body>
+<div class="container">
   <div class="card">
     <a href="../index.html">← Back</a>
-
-    <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter waves hello">
+    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
+    <img class="peter-hero" src="../assets/img/peter-cover.webp" alt="Peter the Python" loading="lazy">
 
     <h1>Lesson 0: Say Hello</h1>
 
-    <div class="learnbox" id="explain0">
-      <h4>Why this?</h4>
-      <ul class="kids-list">
-        <li><code>print()</code> means “Peter says it out loud.” The quotes are Peter’s talking marks.</li>
-      </ul>
-      <h4>What you’ll type</h4>
-      <ul class="kids-list">
-        <li>Type exactly: <code>print("Hello, Python!")</code></li>
-      </ul>
-      <div class="ttsbar">
-        <button class="btn ghost" onclick="readBySelector('#explain0')">🔊 Read this aloud</button>
-      </div>
+    <div id="why" class="learnbox">
+      <h4>Why?</h4>
+      <p>First words! Use <code>print()</code> to make Peter say something.</p>
+      <h4>What to type</h4>
+      <p>Type <code>print("Hello, Peter!")</code> and press <b>Run</b>.</p>
+      <div class="ttsbar"><button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button></div>
     </div>
 
     <div class="hud">
@@ -66,33 +45,31 @@
     </div>
 
     <div class="toolbar">
-      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
+      <button id="fill-start" class="btn">Insert Starter</button>
+      <button class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
+      <button id="fill-solution" class="btn ghost">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder='Type: print("Hello, Python!")'></textarea>
+    <textarea id="editor" class="editor" placeholder='Type print("Hello, Peter!") here...'></textarea>
 
     <p>
-      <button id="run" class="btn" type="button">Run ▶</button>
-      <a class="btn ghost" href="ch1_add.html">Next Lesson →</a>
+      <button id="run" class="btn">Run ▶</button>
+      <a class="btn ghost" href="ch1_add.html" style="margin-left:.4rem">Next Lesson →</a>
     </p>
+
     <pre id="out"></pre>
+
+    <details id="hint" style="margin-top:.6rem">
+      <summary><b>Hint</b></summary>
+      <p>Use parentheses like open/close hands: <code>( )</code> holding the words you want to say.</p>
+      <p>Example: <code>print("Hello, Peter!")</code></p>
+    </details>
   </div>
+</div>
 
-  <script type="py">
-from js import document, localStorage, window
-from pyodide.ffi import create_proxy
-import io, sys, re
-
-STARTER = 'print("Hello, Python!")\\n'
-
-class Capture:
-    def __enter__(self):
-        self._old = sys.stdout
-        self.buf = io.StringIO()
-        sys.stdout = self.buf
-        return self.buf
-    def __exit__(self, *args):
-        sys.stdout = self._old
+<py-script>
+from js import document, localStorage, window, L0_START, L0_SOLN
+import sys, io
 
 def gi(k):
     v = localStorage.getItem(k)
@@ -101,37 +78,37 @@ def gi(k):
 
 def setb(stars=None, bugs=None):
     if stars is not None: localStorage.setItem('stars', str(stars))
-    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
-    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
-    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
-
-def insert_starter(evt):
-    document.getElementById('editor').value = STARTER
+    if bugs is not None: localStorage.setItem('bugs', str(bugs))
+    document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
+    document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
 
 def run(evt):
     src = document.getElementById('editor').value
-    if not src.strip():
-        document.getElementById('out').textContent = "Type your code first 🙂"
-        return
+    out_el = document.getElementById('out')
+    f = io.StringIO()
     try:
-        with Capture() as cap:
+        old = sys.stdout; sys.stdout = f
+        try:
             exec(src, {})
-        out = cap.getvalue().strip()
-        ok = bool(re.search(r"hello.*python", out.lower()))
-        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\nHello, Python!"
-        if ok:
-            document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
-            setb(stars=gi('stars')+1)
-            window.launchConfetti(); window.playConfettiSound()
-        else:
-            raise Exception('Make sure it prints exactly: Hello, Python!')
+        finally:
+            sys.stdout = old
+        output = f.getvalue()
+        assert "Hello" in output, "Did you print a greeting?"
+        out_el.textContent = output + "\nAll checks passed! ⭐"
+        setb(stars=gi('stars')+1)
+        try: window.confetti()
+        except: pass
     except Exception as e:
-        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
+        out_el.textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
 
-document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
-document.getElementById('run').addEventListener('click', create_proxy(run))
+document.getElementById('run').addEventListener('click', run)
+document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L0_START))
+document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L0_SOLN))
+# Auto-starter
+if not document.getElementById('editor').value:
+    document.getElementById('editor').value = L0_START
 setb()
-  </script>
+</py-script>
 </body>
 </html>
