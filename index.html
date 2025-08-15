@@ -4,6 +4,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Peter the Python Game — Demo</title>
+  <!-- New, kid-friendly meta description -->
+  <meta name="description" content="Learn Python the kid-friendly way with Peter the Python: tiny stories, read-aloud help, type-to-try challenges, stars for wins and bugs as helpful clues—right in your browser (PyScript).">
   <link rel="stylesheet" href="assets/styles.css">
   <script defer src="assets/app.js"></script>
 </head>
@@ -11,7 +13,11 @@
   <div class="container">
     <div class="card">
       <h1>Peter the Python Game — Demo</h1>
-      <h2>A browser-based Python playground (powered by PyScript).</h2>
+      <!-- Updated home page description -->
+      <h2>
+        Learn Python the kid-friendly way: tiny stories, <em>read-aloud</em> help,
+        type-to-try challenges, ⭐ stars for wins and 🐞 bugs as clues — all in your browser (PyScript).
+      </h2>
 
       <!-- Smaller cover -->
       <p><img class="cover" src="assets/img/peter-cover.webp" alt="Peter the Python cover" loading="lazy"></p>
@@ -28,22 +34,33 @@
         </a>
       </p>
 
+      <!-- Friendly “About this demo” box -->
+      <div class="learnbox" id="about-demo">
+        <h4>What happens here</h4>
+        <ul class="kids-list">
+          <li>Read a tiny story, then <b>type the code yourself</b>.</li>
+          <li>Press <span class="shortcut">Run ▶</span> to check your work.</li>
+          <li>Correct = ⭐ with confetti; mistake = 🐞 (a clue to fix).</li>
+          <li>Tap <b>🔊 Read this aloud</b> when you want the page to speak.</li>
+        </ul>
+      </div>
+
       <!-- Lessons -->
       <h3>Lessons</h3>
       <div class="grid cols-2" style="margin-top:.5rem">
         <div class="card">
           <h3>Lesson 0: Say Hello</h3>
-          <p class="small">Why? <code>print()</code> lets Peter talk. First, make him say “Hello, Python!”.</p>
+          <p class="small">First words: make Peter talk with <code>print()</code>.</p>
           <a class="btn" href="exercises/ch0_hello.html">Start ▶</a>
         </div>
         <div class="card">
           <h3>Lesson 1: add(a, b)</h3>
-          <p class="small">Why? A function is a named trick. Teach Peter to add two numbers.</p>
+          <p class="small">A function is a named trick. Teach Peter to add two numbers and say the answer.</p>
           <a class="btn" href="exercises/ch1_add.html">Start ▶</a>
         </div>
         <div class="card">
           <h3>Lesson 2: Treasure Chest (lists)</h3>
-          <p class="small">Why? A list is a treasure chest. Add a gem and peek first/last!</p>
+          <p class="small">Lists are treasure chests. Add a gem and peek at the first and last.</p>
           <a class="btn" href="exercises/ch2_gems.html">Start ▶</a>
         </div>
       </div>
@@ -52,18 +69,18 @@
       <h3 style="margin-top:1rem">Practice Zone</h3>
       <div class="grid cols-2" style="margin-top:.5rem">
         <div class="card">
-          <h3>Practice 1: Hello friend</h3>
-          <p class="small">Say hello to a random name using <code>print()</code>.</p>
+          <h3>Practice 1: Greet &amp; Add</h3>
+          <p class="small">Make one function that says hello to a random name and prints a sum.</p>
           <a class="btn" href="exercises/p1_hello_name.html">Start ▶</a>
         </div>
         <div class="card">
-          <h3>Practice 2: Add two numbers</h3>
-          <p class="small">Define <code>add(a, b)</code> and print the sum (numbers change each time).</p>
+          <h3>Practice 2: Chest Report</h3>
+          <p class="small">Greet, append a new gem to the chest, then print first &amp; last — all in one function.</p>
           <a class="btn" href="exercises/p2_add_random.html">Start ▶</a>
         </div>
         <div class="card">
-          <h3>Practice 3: Treasure chest remix</h3>
-          <p class="small">Append a random gem and print the first & last.</p>
+          <h3>Practice 3: Math Treasure</h3>
+          <p class="small">Use two functions: greet + add, then print <code>ruby diamond</code> from a list.</p>
           <a class="btn" href="exercises/p3_list_chest.html">Start ▶</a>
         </div>
       </div>
@@ -74,19 +91,26 @@
         <div class="dl">
           <div class="dt"><span class="sym">( )</span> Parentheses</div>
           <div class="dd">Hold things together or pass things into functions. <em>Memory:</em> Peter’s <b>hands</b>—they hold the stuff!</div>
+
           <div class="dt"><span class="sym">[ ]</span> Square brackets</div>
-          <div class="dd">Make a list or get items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
+          <div class="dd">Make a list or pick items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
+
           <div class="dt"><span class="sym">{ }</span> Curly braces</div>
           <div class="dd">Make a set or dictionary (named boxes). <em>Memory:</em> a <b>toolbox</b> with labeled drawers.</div>
+
           <div class="dt"><span class="sym">: </span> Colon</div>
-          <div class="dd">Starts a block (like telling a helper what to do next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
-          <div class="dt"><span class="sym">return</span></div>
-          <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b>—send work out, answer comes back.</div>
+          <div class="dd">Starts a block (tells the helper what comes next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
+
           <div class="dt"><span class="sym">print</span></div>
           <div class="dd">Say it on the screen. <em>Memory:</em> Peter’s <b>voice</b>.</div>
+
+          <div class="dt"><span class="sym">return</span></div>
+          <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b>—send work out, answer comes back.</div>
+
           <div class="dt"><span class="sym">-1</span></div>
           <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
         </div>
+
         <div class="ttsbar">
           <button class="btn ghost" onclick="readBySelector('#mini-glossary')">🔊 Read this aloud</button>
         </div>
