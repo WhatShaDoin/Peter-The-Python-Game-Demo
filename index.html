@@ -41,29 +41,24 @@
   }
   </script>
 
-  <!-- External CSS with cache-busting -->
-  <link rel="stylesheet" href="assets/styles.css?v=2">
+  <!-- Site CSS (cache-busted) -->
+  <link rel="stylesheet" href="assets/styles.css?v=3">
 
-  <!-- Inline fallback (kicks in if styles.css fails to load) -->
-  <style>
-    body{font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#1f2330;background:#f7f8fb;margin:0}
-    .container{max-width:1000px;margin:24px auto;padding:0 16px}
-    .card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-    .btn{display:inline-block;background:#3b82f6;color:#fff;border:0;border-radius:999px;padding:.5rem .9rem;font-weight:600;text-decoration:none}
-    .hud{display:flex;gap:.5rem;align-items:center;margin:.4rem 0 1rem;flex-wrap:wrap}
-    .badge{background:#111827;color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem}
-    .badge.bug{background:#ef4444}
-    .cover{width:min(520px,90%);display:block;margin:.5rem auto;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-    .grid{display:grid;gap:12px}
-    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    @media (max-width:720px){.grid.cols-2{grid-template-columns:1fr}}
-    .learnbox{background:#f2f7ff;border:1px solid #dbeafe;border-radius:12px;padding:.6rem .8rem;margin:.6rem 0 1rem}
-    .kids-list{margin:.25rem 0 .25rem 1rem}
-    .dl{display:grid;grid-template-columns:220px 1fr;gap:.25rem .75rem}
-    .dt{font-weight:700}.sym{letter-spacing:.25em;padding:0 .15em;display:inline-block}
-    .footer{margin-top:1rem;font-size:.85rem;color:#6b7280}
-  </style>
+  <!-- Tiny fallback for read-aloud (in case assets/app.js hasn't loaded yet) -->
+  <script>
+    window.readBySelector ||= function(sel){
+      const el = document.querySelector(sel);
+      if(!el) return;
+      const text = el.innerText.replace(/\s+/g,' ').trim();
+      if('speechSynthesis' in window){
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(u);
+      }
+    };
+  </script>
 
+  <!-- Your JS helpers (stars/bugs/confetti, etc.) -->
   <script defer src="assets/app.js"></script>
 </head>
 <body>
@@ -75,8 +70,13 @@
         type-to-try challenges, ⭐ stars for wins and 🐞 bugs as clues — all in your browser (PyScript).
       </h2>
 
-      <!-- Cover image -->
-      <p><img class="cover" src="assets/img/peter-cover.webp" alt="Peter the Python smiling at a computer" loading="lazy"></p>
+      <!-- Cover image (hard-sized so it can't blow up) -->
+      <p>
+        <img id="cover-img"
+             src="assets/img/peter-cover.webp"
+             alt="Peter the Python smiling at a computer"
+             style="max-width:520px;width:90%;height:auto;display:block;margin:12px auto;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)">
+      </p>
 
       <!-- HUD -->
       <div class="hud">
@@ -101,8 +101,7 @@
           <li>Tap <b>🔊 Read this aloud</b> when you want the page to speak.</li>
         </ul>
         <div class="ttsbar">
-          <button class="btn" style="background:#fff;color:#3b82f6;border:2px solid #3b82f6"
-                  onclick="readBySelector && readBySelector('#about-demo')">🔊 Read this aloud</button>
+          <button class="btn ghost" onclick="readBySelector('#about-demo')">🔊 Read this aloud</button>
         </div>
       </div>
 
@@ -182,8 +181,7 @@
           <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
         </div>
         <div class="ttsbar">
-          <button class="btn" style="background:#fff;color:#3b82f6;border:2px solid #3b82f6"
-                  onclick="readBySelector && readBySelector('#mini-glossary')">🔊 Read this aloud</button>
+          <button class="btn ghost" onclick="readBySelector('#mini-glossary')">🔊 Read this aloud</button>
         </div>
       </div>
 
