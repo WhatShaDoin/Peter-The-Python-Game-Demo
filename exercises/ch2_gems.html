@@ -13,6 +13,7 @@
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
     <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with treasure chest">
 
@@ -45,7 +46,11 @@
 
     <textarea id="editor" class="editor" placeholder="# 1) Make list\n# 2) Append 'diamond'\n# 3) Print first and last"></textarea>
 
-    <p><button id="run" class="btn" type="button">Run ▶</button></p>
+    <p>
+      <button id="run" class="btn" type="button">Run ▶</button>
+      <a class="btn ghost" href="p1_hello_name.html">Next: Practice 1 →</a>
+      <a class="btn" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
+    </p>
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
@@ -107,10 +112,8 @@ def run(evt):
             exec(src, ns)
         out = cap.getvalue().strip()
 
-        # Basic checks
         assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
         assert 'diamond' in ns['gems'], "Append 'diamond' to the list."
-        # Must print first and last on one line (two tokens)
         parts = out.split()
         document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\nruby diamond"
         assert len(parts) >= 2 and parts[0].lower()=='ruby' and parts[-1].lower()=='diamond', \
