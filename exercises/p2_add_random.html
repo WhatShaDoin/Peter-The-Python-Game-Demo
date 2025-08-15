@@ -12,7 +12,7 @@
 
   <script>
     addEventListener('DOMContentLoaded', () => {
-      const a = Math.floor(Math.random()*6)+1;   // 1..7
+      const a = Math.floor(Math.random()*6)+1;
       const b = Math.floor(Math.random()*6)+1;
       document.getElementById('nA').textContent = a;
       document.getElementById('nB').textContent = b;
@@ -22,6 +22,7 @@
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter doing math">
 
@@ -110,7 +111,6 @@ def run(evt):
         document.getElementById('out').textContent = "Type your code first 🙂"; return
     ns = {}
     try:
-        # Must define add and PRINT inside it
         assert 'def add' in src, "Define a function named add."
         with Capture() as cap:
             exec(src, ns)
