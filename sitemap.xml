@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch1_add.html</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch2_gems.html</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html</loc></url>
-  <url><loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p3_list_chest.html</loc></url>
+  <!-- Home -->
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/</loc>
+  </url>
+
+  <!-- Lessons -->
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html</loc>
+  </url>
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch1_add.html</loc>
+  </url>
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch2_gems.html</loc>
+  </url>
+
+  <!-- Practice Zone -->
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html</loc>
+  </url>
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html</loc>
+  </url>
+  <url>
+    <loc>https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p3_list_chest.html</loc>
+  </url>
 </urlset>
