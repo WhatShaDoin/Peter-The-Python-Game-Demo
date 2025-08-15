@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Glossary — Peter the Python Game</title>
+  <meta name="description" content="Kid-friendly Python glossary: symbols, words, meanings, and fun ways to remember. Read-aloud for every entry.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/glossary.html">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Glossary — Peter the Python Game">
+  <meta property="og:description" content="Symbols, words, meanings, and fun memory tricks.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/glossary.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glossary — Peter the Python Game">
+  <meta name="twitter:description" content="Kid-friendly Python glossary with read-aloud.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <!-- JSON-LD: LearningResource (Glossary) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Glossary — Peter the Python Game",
+    "learningResourceType":"Glossary",
+    "description":"Kid-friendly Python glossary with symbols, meanings, and memory aids. Read-aloud for each entry.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/glossary.html"
+  }
+  </script>
+
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
+
+  <style>
+    .gloss-wrap { max-width: 1100px; margin: 0 auto; }
+    .searchbar { display:flex; gap:.5rem; align-items:center; margin:.5rem 0 1rem; }
+    .searchbar input { flex:1; padding:.6rem .8rem; border:1px solid #ddd; border-radius:.6rem; }
+    .cats { display:flex; flex-wrap:wrap; gap:.5rem; margin:.25rem 0 1rem; }
+    .cats .btn { font-size:.9rem; padding:.3rem .6rem; }
+    table.gloss { width:100%; border-collapse:collapse; }
+    table.gloss th, table.gloss td { border-bottom:1px solid #eee; padding:.6rem .5rem; vertical-align:top; }
+    table.gloss th { text-align:left; font-size:.95rem; opacity:.8; }
+    .symcell { width:3rem; font-size:1.4rem; }
+    .wordcell { white-space:nowrap; font-weight:600; }
+    .mem { font-style:italic; opacity:.9; }
+    .ttsbtn { white-space:nowrap; }
+    .tag { display:inline-block; font-size:.75rem; background:#f3f3f7; border-radius:.5rem; padding:.1rem .4rem; margin-left:.25rem; }
+    .note { font-size:.9rem; opacity:.85; }
+    .peter-hero { width:120px; float:right; margin-left:.5rem; }
+    .muted { opacity:.7; }
+    .anchor { font-size:.85rem; opacity:.8; }
+  </style>
+
+  <script>
+    // Fallback read-aloud if assets/app.js isn't loaded yet
+    if (!window.readBySelector) {
+      window.readBySelector = function(sel) {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        const text = el.innerText.replace(/\s+/g, ' ').trim();
+        if ('speechSynthesis' in window) {
+          speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(text);
+          speechSynthesis.speak(u);
+        } else {
+          alert("Read-aloud not supported on this browser.");
+        }
+      }
+    }
+    // Simple filter for search + category
+    function filterGloss() {
+      const q = document.getElementById('q').value.toLowerCase().trim();
+      const cat = document.querySelector('.cats input[name=cat]:checked')?.value || 'all';
+      document.querySelectorAll('tbody tr').forEach(tr => {
+        const hay = (tr.dataset.term || '').toLowerCase();
+        const hitQ = !q || hay.includes(q);
+        const hitC = (cat==='all') || (tr.dataset.cat || '').split(' ').includes(cat);
+        tr.style.display = (hitQ && hitC) ? '' : 'none';
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('q').addEventListener('input', filterGloss);
+      document.querySelectorAll('.cats input[name=cat]').forEach(r => r.addEventListener('change', filterGloss));
+    });
+  </script>
+</head>
+<body>
+  <div class="container gloss-wrap">
+    <div class="card">
+      <a href="index.html">← Back</a>
+      <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
+
+      <img class="peter-hero" src="assets/img/peter-cover.webp" alt="Peter the Python mascot">
+
+      <h1>Glossary</h1>
+      <p class="note">Every row has: a tiny <b>image</b> (emoji), the <b>word/symbol</b>, a kid-friendly <b>meaning</b>, and a <b>memory trick</b>. Tap 🔊 to hear it.</p>
+
+      <div class="searchbar">
+        <input id="q" type="search" placeholder="Search: list, loop, +, ==, slice, etc.">
+      </div>
+
+      <div class="cats">
+        <label><input type="radio" name="cat" value="all" checked> <span class="btn ghost">All</span></label>
+        <label><input type="radio" name="cat" value="basics"> <span class="btn ghost">Basics</span></label>
+        <label><input type="radio" name="cat" value="math"> <span class="btn ghost">Math</span></label>
+        <label><input type="radio" name="cat" value="compare"> <span class="btn ghost">Compare</span></label>
+        <label><input type="radio" name="cat" value="logic"> <span class="btn ghost">Logic</span></label>
+        <label><input type="radio" name="cat" value="text"> <span class="btn ghost">Text</span></label>
+        <label><input type="radio" name="cat" value="collections"> <span class="btn ghost">Collections</span></label>
+        <label><input type="radio" name="cat" value="flow"> <span class="btn ghost">Flow</span></label>
+        <label><input type="radio" name="cat" value="func"> <span class="btn ghost">Functions</span></label>
+        <label><input type="radio" name="cat" value="modules"> <span class="btn ghost">Modules</span></label>
+        <label><input type="radio" name="cat" value="oop"> <span class="btn ghost">Objects</span></label>
+        <label><input type="radio" name="cat" value="errors"> <span class="btn ghost">Errors</span></label>
+        <label><input type="radio" name="cat" value="advanced"> <span class="btn ghost">Advanced</span></label>
+      </div>
+
+      <table class="gloss">
+        <thead>
+          <tr><th class="symcell">Img</th><th class="wordcell">Word / Symbol</th><th>Meaning</th><th>Way to remember</th><th class="ttsbtn">🔊</th></tr>
+        </thead>
+        <tbody>
+
+          <!-- BASICS -->
+          <tr data-cat="basics" data-term="print say output screen speech">
+            <td class="symcell">💬</td>
+            <td class="wordcell">(function) print()</td>
+            <td id="g-print">Say it on the screen (shows text).</td>
+            <td class="mem">Peter’s voice.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-print')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="variable name box store value">
+            <td class="symcell">🏷️</td>
+            <td class="wordcell">variable</td>
+            <td id="g-var">A labeled box that stores a value.</td>
+            <td class="mem">A sticky name tag on a box.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-var')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="value data number text true false">
+            <td class="symcell">🎁</td>
+            <td class="wordcell">value</td>
+            <td id="g-value">The thing inside the box (number, text, etc.).</td>
+            <td class="mem">Gift inside the package.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-value')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="type int float str bool kind of value">
+            <td class="symcell">🔤</td>
+            <td class="wordcell">type</td>
+            <td id="g-type">The kind of value (like <code>int</code>, <code>str</code>, <code>bool</code>).</td>
+            <td class="mem">Shelf label at a store.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-type')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="comment # hashtag note ignore">
+            <td class="symcell">#️⃣</td>
+            <td class="wordcell"># (comment)</td>
+            <td id="g-comment">A note to humans—Python ignores it.</td>
+            <td class="mem">A whisper to your future self.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-comment')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="quotes string text str">
+            <td class="symcell">💬</td>
+            <td class="wordcell">" " or ' ' (quotes)</td>
+            <td id="g-quotes">Make a string (text).</td>
+            <td class="mem">Speech bubbles around words.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-quotes')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="parentheses hands function call group">
+            <td class="symcell">👐</td>
+            <td class="wordcell">( ) (parentheses)</td>
+            <td id="g-paren">Hold things together or pass things into a function.</td>
+            <td class="mem">Peter’s hands holding stuff.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-paren')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="colon block start indent if for def">
+            <td class="symcell">🥁</td>
+            <td class="wordcell">: (colon)</td>
+            <td id="g-colon">Starts a block (tells what comes next).</td>
+            <td class="mem">A drum beat before action.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-colon')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="indent indentation spaces tab block scope">
+            <td class="symcell">↘️</td>
+            <td class="wordcell">indentation</td>
+            <td id="g-indent">Spaces at the start of a line that show who is inside a block.</td>
+            <td class="mem">Stairs that go into a room.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-indent')">🔊</button></td>
+          </tr>
+          <tr data-cat="basics" data-term="dot attribute method property object">
+            <td class="symcell">🔘</td>
+            <td class="wordcell">. (dot)</td>
+            <td id="g-dot">Go inside an object to use a tool or label.</td>
+            <td class="mem">A doorbell to a house of tools.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-dot')">🔊</button></td>
+          </tr>
+
+          <!-- MATH -->
+          <tr data-cat="math" data-term="plus add addition +">
+            <td class="symcell">➕</td>
+            <td class="wordcell">+ (add)</td>
+            <td id="g-plus">Add two numbers.</td>
+            <td class="mem">Put blocks together.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-plus')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="minus subtract -">
+            <td class="symcell">➖</td>
+            <td class="wordcell">- (subtract)</td>
+            <td id="g-minus">Take away.</td>
+            <td class="mem">Remove a block.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-minus')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="times multiply star *">
+            <td class="symcell">✖️</td>
+            <td class="wordcell">* (multiply)</td>
+            <td id="g-star">Repeat groups or scale up.</td>
+            <td class="mem">Magic star that copies.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-star')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="divide / float division">
+            <td class="symcell">➗</td>
+            <td class="wordcell">/ (divide)</td>
+            <td id="g-div">Split into equal parts (decimal allowed).</td>
+            <td class="mem">Pizza slices with crumbs.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-div')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="floor division // integer">
+            <td class="symcell">🧱</td>
+            <td class="wordcell">// (floor div)</td>
+            <td id="g-fdiv">Divide and round down to an integer.</td>
+            <td class="mem">Two boots stomp the number down.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-fdiv')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="modulo remainder %">
+            <td class="symcell">🍪</td>
+            <td class="wordcell">% (mod)</td>
+            <td id="g-mod">The leftover after dividing.</td>
+            <td class="mem">Cookie crumbs that remain.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-mod')">🔊</button></td>
+          </tr>
+          <tr data-cat="math" data-term="power exponent **">
+            <td class="symcell">🚀</td>
+            <td class="wordcell">** (power)</td>
+            <td id="g-pow">Raise to a power (3**2 = 9).</td>
+            <td class="mem">Double star = rocket power.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-pow')">🔊</button></td>
+          </tr>
+
+          <!-- COMPARE & ASSIGN -->
+          <tr data-cat="compare" data-term="assignment equals set value =">
+            <td class="symcell">📌</td>
+            <td class="wordcell">= (assign)</td>
+            <td id="g-assign">Put a value into a variable.</td>
+            <td class="mem">Pin the label on the box.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-assign')">🔊</button></td>
+          </tr>
+          <tr data-cat="compare" data-term="equal comparison == double equals">
+            <td class="symcell">🟰</td>
+            <td class="wordcell">== (equal?)</td>
+            <td id="g-eq">Ask: are they the same?</td>
+            <td class="mem">Two equal twins.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-eq')">🔊</button></td>
+          </tr>
+          <tr data-cat="compare" data-term="not equal !=">
+            <td class="symcell">🚫</td>
+            <td class="wordcell">!= (not equal)</td>
+            <td id="g-neq">Ask: are they different?</td>
+            <td class="mem">No-match sign.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-neq')">🔊</button></td>
+          </tr>
+          <tr data-cat="compare" data-term="less greater <= >= < >">
+            <td class="symcell">🔼</td>
+            <td class="wordcell">&lt;  &gt;  &lt;=  &gt;=</td>
+            <td id="g-cmp">Compare sizes (smaller / bigger).</td>
+            <td class="mem">Crocodile mouth eats the bigger.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-cmp')">🔊</button></td>
+          </tr>
+          <tr data-cat="compare" data-term="augmented assignment += -= *= /=">
+            <td class="symcell">➕=</td>
+            <td class="wordcell">+=  -=  *=  /=</td>
+            <td id="g-aug">Do math and assign in one step.</td>
+            <td class="mem">Shortcut stickers.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-aug')">🔊</button></td>
+          </tr>
+
+          <!-- LOGIC -->
+          <tr data-cat="logic" data-term="and both true">
+            <td class="symcell">🤝</td>
+            <td class="wordcell">and</td>
+            <td id="g-and">True only if both are true.</td>
+            <td class="mem">Two friends agree.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-and')">🔊</button></td>
+          </tr>
+          <tr data-cat="logic" data-term="or either true">
+            <td class="symcell">🔀</td>
+            <td class="wordcell">or</td>
+            <td id="g-or">True if at least one is true.</td>
+            <td class="mem">Choose this or that.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-or')">🔊</button></td>
+          </tr>
+          <tr data-cat="logic" data-term="not flip boolean">
+            <td class="symcell">🔁</td>
+            <td class="wordcell">not</td>
+            <td id="g-not">Flips true to false (and back).</td>
+            <td class="mem">Opposite day.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-not')">🔊</button></td>
+          </tr>
+          <tr data-cat="logic" data-term="True False None boolean null">
+            <td class="symcell">✅</td>
+            <td class="wordcell">True / False / None</td>
+            <td id="g-tfn">Yes / No / Empty placeholder.</td>
+            <td class="mem">Check, X, and an empty box.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-tfn')">🔊</button></td>
+          </tr>
+
+          <!-- TEXT / STRINGS -->
+          <tr data-cat="text" data-term="string str text characters">
+            <td class="symcell">🧵</td>
+            <td class="wordcell">string (<code>str</code>)</td>
+            <td id="g-str">A line of text characters.</td>
+            <td class="mem">A string of beads (letters).</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-str')">🔊</button></td>
+          </tr>
+          <tr data-cat="text" data-term="f-string formatted string f">
+            <td class="symcell">🪄</td>
+            <td class="wordcell">f"…"</td>
+            <td id="g-fstr">A magic string that shows values inside <code>{ }</code>.</td>
+            <td class="mem">Curly doors show what’s inside.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-fstr')">🔊</button></td>
+          </tr>
+          <tr data-cat="text" data-term="index slice [] colon :">
+            <td class="symcell">🎯</td>
+            <td class="wordcell">index / slice</td>
+            <td id="g-slice">Pick a spot <code>[i]</code> or a piece <code>[start:stop]</code>.</td>
+            <td class="mem">Pointer finger and a cut line.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-slice')">🔊</button></td>
+          </tr>
+          <tr data-cat="text" data-term="len length size of string list">
+            <td class="symcell">📏</td>
+            <td class="wordcell">len()</td>
+            <td id="g-len">How many items/letters.</td>
+            <td class="mem">Ruler that counts.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-len')">🔊</button></td>
+          </tr>
+          <tr data-cat="text" data-term="join split lower upper replace">
+            <td class="symcell">🧩</td>
+            <td class="wordcell">string methods</td>
+            <td id="g-strmeth"><code>.lower()</code>, <code>.upper()</code>, <code>.split()</code>, <code>.join()</code>, <code>.replace()</code>…</td>
+            <td class="mem">Little tools on the string’s keychain.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-strmeth')">🔊</button></td>
+          </tr>
+
+          <!-- COLLECTIONS -->
+          <tr data-cat="collections" data-term="list [] array dynamic">
+            <td class="symcell">📦</td>
+            <td class="wordcell">list  [ ]</td>
+            <td id="g-list">An ordered collection you can change.</td>
+            <td class="mem">A treasure chest you reach into.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-list')">🔊</button></td>
+          </tr>
+          <tr data-cat="collections" data-term="tuple () fixed">
+            <td class="symcell">🗂️</td>
+            <td class="wordcell">tuple  ( , )</td>
+            <td id="g-tuple">An ordered collection you can’t change.</td>
+            <td class="mem">A photo album—no edits.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-tuple')">🔊</button></td>
+          </tr>
+          <tr data-cat="collections" data-term="dict dictionary { } key value map">
+            <td class="symcell">🧰</td>
+            <td class="wordcell">dict  { }</td>
+            <td id="g-dict">Labeled drawers: key → value.</td>
+            <td class="mem">Toolbox with named slots.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-dict')">🔊</button></td>
+          </tr>
+          <tr data-cat="collections" data-term="set { } unique membership">
+            <td class="symcell">🫧</td>
+            <td class="wordcell">set  { }</td>
+            <td id="g-set">A bag of unique items (no duplicates).</td>
+            <td class="mem">Soap bubbles—no two stick.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-set')">🔊</button></td>
+          </tr>
+          <tr data-cat="collections" data-term="append extend insert pop remove">
+            <td class="symcell">🛠️</td>
+            <td class="wordcell">list methods</td>
+            <td id="g-listmeth"><code>.append()</code>, <code>.extend()</code>, <code>.insert()</code>, <code>.pop()</code>, <code>.remove()</code>…</td>
+            <td class="mem">Chest tools: add/take gems.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-listmeth')">🔊</button></td>
+          </tr>
+
+          <!-- FLOW / BRANCH / LOOP -->
+          <tr data-cat="flow" data-term="if elif else condition branch">
+            <td class="symcell">🛤️</td>
+            <td class="wordcell">if / elif / else</td>
+            <td id="g-if">Choose a path based on a test.</td>
+            <td class="mem">Train tracks that split.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-if')">🔊</button></td>
+          </tr>
+          <tr data-cat="flow" data-term="for loop each item in range">
+            <td class="symcell">🔁</td>
+            <td class="wordcell">for</td>
+            <td id="g-for">Do something for every item/number.</td>
+            <td class="mem">Marching in a line.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-for')">🔊</button></td>
+          </tr>
+          <tr data-cat="flow" data-term="while loop repeat until stop">
+            <td class="symcell">🌀</td>
+            <td class="wordcell">while</td>
+            <td id="g-while">Repeat while a test is true.</td>
+            <td class="mem">Spiral that stops when told.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-while')">🔊</button></td>
+          </tr>
+          <tr data-cat="flow" data-term="break continue pass control">
+            <td class="symcell">⏹️</td>
+            <td class="wordcell">break / continue / pass</td>
+            <td id="g-bcp">Stop loop / skip to next / do nothing.</td>
+            <td class="mem">Stop, hop, hands-off.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-bcp')">🔊</button></td>
+          </tr>
+          <tr data-cat="flow" data-term="range numbers sequence">
+            <td class="symcell">📚</td>
+            <td class="wordcell">range()</td>
+            <td id="g-range">Make counting numbers for loops.</td>
+            <td class="mem">Number line in a box.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-range')">🔊</button></td>
+          </tr>
+          <tr data-cat="flow" data-term="enumerate zip pairs index">
+            <td class="symcell">🧷</td>
+            <td class="wordcell">enumerate(), zip()</td>
+            <td id="g-ez">Count items or pair lists together.</td>
+            <td class="mem">Number pins & zipper merge.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-ez')">🔊</button></td>
+          </tr>
+
+          <!-- FUNCTIONS -->
+          <tr data-cat="func" data-term="def define function call">
+            <td class="symcell">🪄</td>
+            <td class="wordcell">def</td>
+            <td id="g-def">Start a function (a named trick).</td>
+            <td class="mem">Magic word to teach a trick.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-def')">🔊</button></td>
+          </tr>
+          <tr data-cat="func" data-term="return give back result">
+            <td class="symcell">🪃</td>
+            <td class="wordcell">return</td>
+            <td id="g-return">Send back an answer from a function.</td>
+            <td class="mem">Boomerang comes back.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-return')">🔊</button></td>
+          </tr>
+          <tr data-cat="func" data-term="parameter argument default keyword">
+            <td class="symcell">📨</td>
+            <td class="wordcell">parameters / arguments</td>
+            <td id="g-args">The info a function needs (with defaults/keywords sometimes).</td>
+            <td class="mem">Mail you hand to the helper.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-args')">🔊</button></td>
+          </tr>
+          <tr data-cat="func" data-term="docstring triple quotes help">
+            <td class="symcell">📖</td>
+            <td class="wordcell">docstring</td>
+            <td id="g-doc">A help note at the top of a function (triple quotes).</td>
+            <td class="mem">Sticky note inside the trick book.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-doc')">🔊</button></td>
+          </tr>
+
+          <!-- MODULES -->
+          <tr data-cat="modules" data-term="import from as module library">
+            <td class="symcell">📦</td>
+            <td class="wordcell">import / from / as</td>
+            <td id="g-import">Bring tools from other boxes (modules).</td>
+            <td class="mem">Borrow your friend’s toolbox.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-import')">🔊</button></td>
+          </tr>
+
+          <!-- OBJECTS -->
+          <tr data-cat="oop" data-term="class object blueprint">
+            <td class="symcell">🏗️</td>
+            <td class="wordcell">class / object</td>
+            <td id="g-class">A blueprint and the thing built from it.</td>
+            <td class="mem">Recipe and the cake.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-class')">🔊</button></td>
+          </tr>
+          <tr data-cat="oop" data-term="method attribute dot .">
+            <td class="symcell">🧰</td>
+            <td class="wordcell">method / attribute</td>
+            <td id="g-method">Tools and labels inside an object (via dot).</td>
+            <td class="mem">Tools in a toolbox drawer.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-method')">🔊</button></td>
+          </tr>
+
+          <!-- ERRORS -->
+          <tr data-cat="errors" data-term="try except finally raise error">
+            <td class="symcell">🧯</td>
+            <td class="wordcell">try / except / finally</td>
+            <td id="g-try">Try code, catch errors, clean up.</td>
+            <td class="mem">Safety net & broom.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-try')">🔊</button></td>
+          </tr>
+          <tr data-cat="errors" data-term="raise throw error">
+            <td class="symcell">🚨</td>
+            <td class="wordcell">raise</td>
+            <td id="g-raise">Make an error on purpose.</td>
+            <td class="mem">Pull the alarm when needed.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-raise')">🔊</button></td>
+          </tr>
+
+          <!-- ADVANCED / NICE-TO-KNOW -->
+          <tr data-cat="advanced" data-term="lambda small anonymous function">
+            <td class="symcell">🏷️</td>
+            <td class="wordcell">lambda</td>
+            <td id="g-lambda">A tiny one-line function without a name.</td>
+            <td class="mem">Pocket-sized trick.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-lambda')">🔊</button></td>
+          </tr>
+          <tr data-cat="advanced" data-term="comprehension list dict set">
+            <td class="symcell">⚙️</td>
+            <td class="wordcell">comprehension</td>
+            <td id="g-comp">Quick way to build lists/dicts/sets in one line.</td>
+            <td class="mem">Factory belt for collections.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-comp')">🔊</button></td>
+          </tr>
+          <tr data-cat="advanced" data-term="open file read write with">
+            <td class="symcell">📂</td>
+            <td class="wordcell">with open(...)</td>
+            <td id="g-open">Safely open a file and auto-close it.</td>
+            <td class="mem">Door that shuts itself.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-open')">🔊</button></td>
+          </tr>
+          <tr data-cat="advanced" data-term="is identity same object">
+            <td class="symcell">🪪</td>
+            <td class="wordcell">is</td>
+            <td id="g-is">Are these the exact same object?</td>
+            <td class="mem">ID card check.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-is')">🔊</button></td>
+          </tr>
+          <tr data-cat="advanced" data-term="in membership contains">
+            <td class="symcell">📥</td>
+            <td class="wordcell">in / not in</td>
+            <td id="g-in">Is an item inside a collection?</td>
+            <td class="mem">Peek inside the chest.</td>
+            <td><button class="btn ghost" onclick="readBySelector('#g-in')">🔊</button></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <p class="muted">P.S. You can use this same page in the Pro version (change the canonical URL & “Go Pro” link).</p>
+    </div>
+  </div>
+</body>
+</html>
