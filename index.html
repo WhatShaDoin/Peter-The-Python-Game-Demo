@@ -41,7 +41,29 @@
   }
   </script>
 
-  <link rel="stylesheet" href="assets/styles.css">
+  <!-- External CSS with cache-busting -->
+  <link rel="stylesheet" href="assets/styles.css?v=2">
+
+  <!-- Inline fallback (kicks in if styles.css fails to load) -->
+  <style>
+    body{font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#1f2330;background:#f7f8fb;margin:0}
+    .container{max-width:1000px;margin:24px auto;padding:0 16px}
+    .card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+    .btn{display:inline-block;background:#3b82f6;color:#fff;border:0;border-radius:999px;padding:.5rem .9rem;font-weight:600;text-decoration:none}
+    .hud{display:flex;gap:.5rem;align-items:center;margin:.4rem 0 1rem;flex-wrap:wrap}
+    .badge{background:#111827;color:#fff;padding:.35rem .6rem;border-radius:999px;font-size:.85rem}
+    .badge.bug{background:#ef4444}
+    .cover{width:min(520px,90%);display:block;margin:.5rem auto;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+    .grid{display:grid;gap:12px}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:720px){.grid.cols-2{grid-template-columns:1fr}}
+    .learnbox{background:#f2f7ff;border:1px solid #dbeafe;border-radius:12px;padding:.6rem .8rem;margin:.6rem 0 1rem}
+    .kids-list{margin:.25rem 0 .25rem 1rem}
+    .dl{display:grid;grid-template-columns:220px 1fr;gap:.25rem .75rem}
+    .dt{font-weight:700}.sym{letter-spacing:.25em;padding:0 .15em;display:inline-block}
+    .footer{margin-top:1rem;font-size:.85rem;color:#6b7280}
+  </style>
+
   <script defer src="assets/app.js"></script>
 </head>
 <body>
@@ -53,7 +75,7 @@
         type-to-try challenges, ⭐ stars for wins and 🐞 bugs as clues — all in your browser (PyScript).
       </h2>
 
-      <!-- Cover image (smaller) -->
+      <!-- Cover image -->
       <p><img class="cover" src="assets/img/peter-cover.webp" alt="Peter the Python smiling at a computer" loading="lazy"></p>
 
       <!-- HUD -->
@@ -74,12 +96,13 @@
         <h4>What happens here</h4>
         <ul class="kids-list">
           <li>Read a tiny story, then <b>type the code yourself</b>.</li>
-          <li>Press <span class="shortcut">Run ▶</span> to check your work.</li>
+          <li>Press <b>Run ▶</b> to check your work.</li>
           <li>Correct = ⭐ with confetti; mistake = 🐞 (a clue you can fix).</li>
           <li>Tap <b>🔊 Read this aloud</b> when you want the page to speak.</li>
         </ul>
         <div class="ttsbar">
-          <button class="btn ghost" onclick="readBySelector('#about-demo')">🔊 Read this aloud</button>
+          <button class="btn" style="background:#fff;color:#3b82f6;border:2px solid #3b82f6"
+                  onclick="readBySelector && readBySelector('#about-demo')">🔊 Read this aloud</button>
         </div>
       </div>
 
@@ -96,4 +119,78 @@
           <p class="small">A function is a named trick. Teach Peter to add two numbers and say the answer.</p>
           <a class="btn" href="exercises/ch1_add.html">Start ▶</a>
         </div>
-        <div class
+        <div class="card">
+          <h3>Lesson 2: Treasure Chest (lists)</h3>
+          <p class="small">Lists are treasure chests. Add a gem and peek at the first and last.</p>
+          <a class="btn" href="exercises/ch2_gems.html">Start ▶</a>
+        </div>
+      </div>
+
+      <!-- Practice Zone -->
+      <h3 style="margin-top:1rem">Practice Zone</h3>
+      <div class="grid cols-2" style="margin-top:.5rem">
+        <div class="card">
+          <h3>Practice 1: Greet &amp; Add</h3>
+          <p class="small">Make one function that says hello to a random name and prints a sum.</p>
+          <a class="btn" href="exercises/p1_hello_name.html">Start ▶</a>
+        </div>
+        <div class="card">
+          <h3>Practice 2: Chest Report</h3>
+          <p class="small">Greet, append a new gem to the chest, then print first &amp; last — all in one function.</p>
+          <a class="btn" href="exercises/p2_add_random.html">Start ▶</a>
+        </div>
+        <div class="card">
+          <h3>Practice 3: Math Treasure</h3>
+          <p class="small">Use two functions: greet + add, then print <code>ruby diamond</code> from a list.</p>
+          <a class="btn" href="exercises/p3_list_chest.html">Start ▶</a>
+        </div>
+      </div>
+
+      <!-- Glossary -->
+      <h3 style="margin-top:1rem">Need a quick reminder?</h3>
+      <div class="grid cols-2" style="margin-top:.5rem">
+        <div class="card">
+          <h3>Glossary</h3>
+          <p class="small">All the symbols and words we use, with kid-friendly meanings and memory tricks. 🔊 Read-aloud too!</p>
+          <a class="btn" href="glossary.html">Open ▶</a>
+        </div>
+      </div>
+
+      <!-- Mini Glossary (quick peek) -->
+      <div class="learnbox" id="mini-glossary" style="margin-top:1rem">
+        <h4>Mini Glossary</h4>
+        <div class="dl">
+          <div class="dt"><span class="sym">( )</span> Parentheses</div>
+          <div class="dd">Hold things together or pass things into functions. <em>Memory:</em> Peter’s <b>hands</b> — they hold the stuff!</div>
+
+          <div class="dt"><span class="sym">[ ]</span> Square brackets</div>
+          <div class="dd">Make a list or pick items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
+
+          <div class="dt"><span class="sym">{ }</span> Curly braces</div>
+          <div class="dd">Make a set or dictionary (named boxes). <em>Memory:</em> a <b>toolbox</b> with labeled drawers.</div>
+
+          <div class="dt"><span class="sym">: </span> Colon</div>
+          <div class="dd">Starts a block (tells the helper what comes next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
+
+          <div class="dt"><span class="sym">print</span></div>
+          <div class="dd">Say it on the screen. <em>Memory:</em> Peter’s <b>voice</b>.</div>
+
+          <div class="dt"><span class="sym">return</span></div>
+          <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b> — send work out, answer comes back.</div>
+
+          <div class="dt"><span class="sym">-1</span></div>
+          <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
+        </div>
+        <div class="ttsbar">
+          <button class="btn" style="background:#fff;color:#3b82f6;border:2px solid #3b82f6"
+                  onclick="readBySelector && readBySelector('#mini-glossary')">🔊 Read this aloud</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        Progress saves to your browser (localStorage). Python is a trademark of the PSF.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
