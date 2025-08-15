@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://whatshadoin.github.io/Peter-The-Python-Game-Demo/sitemap.xml
