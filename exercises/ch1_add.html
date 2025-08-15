@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lesson 1 — add(a,b)</title>
+  <title>Lesson 1 — add(a, b) | Peter the Python Game</title>
+  <meta name="description" content="Kid-friendly Python Lesson 1: make a function add(a, b) that prints the sum. Read-aloud and instant feedback with stars and bugs.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch1_add.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Lesson 1 — add(a, b)">
+  <meta property="og:description" content="Make a function that prints a+b.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch1_add.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lesson 1 — add(a, b)">
+  <meta name="twitter:description" content="Teach Peter to add two numbers and say the answer.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Lesson 1 — add(a, b)",
+    "learningResourceType":"Lesson",
+    "description":"Kid-friendly Python: make a function add(a, b) that prints the sum.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch1_add.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -54,7 +81,7 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">Type:<br> <code>def add( a, b ):</code> then on the next line <code>print( a + b )</code> (notice the spaces in the explanation’s <b>( )</b> only; in code you can write <code>add(a, b)</code>).</div>
+      <div class="small"><code>def add(a, b):</code> then indent and <code>print(a + b)</code>.</div>
     </details>
     <details id="sol" style="display:none"><summary>Solution (exact)</summary>
       <pre>def add(a, b):
@@ -67,7 +94,7 @@ from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys
 
-STARTER = "def add(a, b):\n    print(a + b)\n"
+STARTER = "def add(a, b):\\n    print(a + b)\\n"
 
 class Capture:
     def __enter__(self):
@@ -111,21 +138,20 @@ def run(evt):
             exec(src, ns)
         out = cap.getvalue().strip()
 
-        # require a function named add and that it prints results
         assert 'add' in ns, "Function 'add' is missing."
         with Capture() as cap2:
             ns['add'](2,3)
             ns['add'](-1,1)
         out2 = cap2.getvalue().strip()
-        expected = "5\n0"
-        document.getElementById('out').textContent = f"Your output:\n{out2}\n\nExpected:\n{expected}"
-        assert out2 == expected, "Printed lines must be exactly:\n5 (newline) then 0"
+        expected = "5\\n0"
+        document.getElementById('out').textContent = f"Your output:\\n{out2}\\n\\nExpected:\\n{expected}"
+        assert out2 == expected, "Printed lines must be exactly:\\n5 (newline) then 0"
 
-        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1)
         window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
