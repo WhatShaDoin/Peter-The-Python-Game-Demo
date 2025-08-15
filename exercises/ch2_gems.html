@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lesson 2 — Treasure Chest (lists)</title>
+  <title>Lesson 2 — Treasure Chest (Lists) | Peter the Python Game</title>
+  <meta name="description" content="Kid-friendly Python Lesson 2: create a list, append 'diamond', and print the first and last item. Read-aloud + stars/bugs feedback.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch2_gems.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Lesson 2 — Treasure Chest (Lists)">
+  <meta property="og:description" content="Make a list, add a gem, print first & last.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch2_gems.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lesson 2 — Treasure Chest (Lists)">
+  <meta name="twitter:description" content="Lists are treasure chests—peek inside with Python.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Lesson 2 — Treasure Chest (Lists)",
+    "learningResourceType":"Lesson",
+    "description":"Create a list, append an item, and print first and last.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch2_gems.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -20,13 +47,15 @@
     <h1>Lesson 2: Treasure Chest (lists)</h1>
 
     <div class="learnbox" id="explain2">
-      <h4>Why this?</h4>
+      <h4>Why?</h4>
       <ul class="kids-list">
-        <li>A <b>list</b> is a treasure chest that holds many items. We’ll add a new gem and peek at the first and last spots.</li>
+        <li>A <b>list</b> is a treasure chest that holds many things.</li>
       </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Create a list, append <code>"diamond"</code>, then <code>print</code> the first and last items.</li>
+        <li>Make a chest: <code>gems = ["ruby","emerald","sapphire"]</code></li>
+        <li>Put in a new gem: <code>gems.append("diamond")</code></li>
+        <li>Peek inside and say the first and last: <code>print(gems[0], gems[-1])</code></li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explain2')">🔊 Read this aloud</button>
@@ -68,7 +97,7 @@ from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys
 
-STARTER = 'gems = ["ruby", "emerald", "sapphire"]\n# add diamond, then print first and last\n# print(gems[0], gems[-1])\n'
+STARTER = 'gems = ["ruby", "emerald", "sapphire"]\\n# add diamond, then print first and last\\n# print(gems[0], gems[-1])\\n'
 
 class Capture:
     def __enter__(self):
@@ -115,15 +144,15 @@ def run(evt):
         assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
         assert 'diamond' in ns['gems'], "Append 'diamond' to the list."
         parts = out.split()
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\nruby diamond"
+        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\nruby diamond"
         assert len(parts) >= 2 and parts[0].lower()=='ruby' and parts[-1].lower()=='diamond', \
             "Please print first and last: ruby diamond"
 
-        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1)
         window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
