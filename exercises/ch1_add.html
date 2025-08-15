@@ -9,23 +9,11 @@
   <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
   <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector = function(sel){
+    window.readBySelector = sel => {
       const el = document.querySelector(sel); if(!el) return;
       const t = el.innerText.replace(/\s+/g,' ').trim();
       if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-    window.L1_START = `# Make add(a, b), then print the answer
-def add(a, b):
-    # return the sum
-    pass
-
-print(add(2, 3))  # should show 5
-`;
-    window.L1_SOLN = `def add(a, b):
-    return a + b
-
-print(add(2, 3))
-`;
   </script>
 </head>
 <body>
@@ -76,8 +64,21 @@ print(add(2, 3))
 </div>
 
 <py-script>
-from js import document, localStorage, window, L1_START, L1_SOLN
+from js import document, localStorage, window
 import sys, io
+
+START = '''# Make add(a, b), then print the answer
+def add(a, b):
+    # return the sum
+    pass
+
+print(add(2, 3))  # should show 5
+'''
+SOLN = '''def add(a, b):
+    return a + b
+
+print(add(2, 3))
+'''
 
 def gi(k):
     v = localStorage.getItem(k)
@@ -92,14 +93,12 @@ def setb(stars=None, bugs=None):
 def run(evt):
     src = document.getElementById('editor').value
     out_el = document.getElementById('out')
+    ns = {}
     f = io.StringIO()
     try:
-        ns = {}
         old = sys.stdout; sys.stdout = f
-        try:
-            exec(src, ns)
-        finally:
-            sys.stdout = old
+        try: exec(src, ns)
+        finally: sys.stdout = old
         output = f.getvalue()
         assert 'add' in ns, "Define a function named add(a, b)."
         assert ns['add'](2,3) == 5, "add(2,3) should be 5."
@@ -112,10 +111,12 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L1_START))
-document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L1_SOLN))
+document.getElementById('fill-start').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', START))
+document.getElementById('fill-solution').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', SOLN))
 if not document.getElementById('editor').value:
-    document.getElementById('editor').value = L1_START
+  document.getElementById('editor').value = START
 setb()
 </py-script>
 </body>
