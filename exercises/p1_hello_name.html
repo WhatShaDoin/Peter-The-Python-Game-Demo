@@ -9,20 +9,11 @@
   <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
   <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector = function(sel){
+    window.readBySelector = sel => {
       const el = document.querySelector(sel); if(!el) return;
       const t = el.innerText.replace(/\s+/g,' ').trim();
       if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-    window.P1_STARTER = `def greet_and_add(name, a, b):
-    # 1) say Hello, NAME! using name.upper()
-    # 2) print the sum of a and b
-    pass
-`;
-    window.P1_SOLUTION = `def greet_and_add(name, a, b):
-    print("Hello, " + name.upper() + "!")
-    print(a + b)
-`;
   </script>
 </head>
 <body>
@@ -77,8 +68,18 @@
 </div>
 
 <py-script>
-from js import document, localStorage, window, P1_STARTER, P1_SOLUTION
+from js import document, localStorage, window
 import random, re, sys, io
+
+START = '''def greet_and_add(name, a, b):
+    # 1) say Hello, NAME! using name.upper()
+    # 2) print the sum of a and b
+    pass
+'''
+SOLN = '''def greet_and_add(name, a, b):
+    print("Hello, " + name.upper() + "!")
+    print(a + b)
+'''
 
 names = ["Kai","Ava","Milo","Zoe","Lia","Noah","Ivy","Owen","Maya","Leo"]
 NAME = random.choice(names); A = 2; B = 3
@@ -118,10 +119,12 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P1_STARTER))
-document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P1_SOLUTION))
+document.getElementById('fill-start').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', START))
+document.getElementById('fill-solution').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', SOLN))
 if not document.getElementById('editor').value:
-    document.getElementById('editor').value = P1_STARTER
+  document.getElementById('editor').value = START
 setb()
 </py-script>
 </body>
