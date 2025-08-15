@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 2 — Add two numbers</title>
+  <title>Practice 2 — Chest Report</title>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,11 +11,14 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
+    // random name + new gem
+    const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
+    const NEWS  = ["diamond","pearl","amethyst","opal","topaz","garnet"];
+    const namePick = NAMES[Math.floor(Math.random()*NAMES.length)];
+    const newGem   = NEWS[Math.floor(Math.random()*NEWS.length)];
     addEventListener('DOMContentLoaded', () => {
-      const a = Math.floor(Math.random()*6)+1;
-      const b = Math.floor(Math.random()*6)+1;
-      document.getElementById('nA').textContent = a;
-      document.getElementById('nB').textContent = b;
+      document.getElementById('targetName').textContent = namePick;
+      document.getElementById('newGem').textContent = newGem;
     });
   </script>
 </head>
@@ -24,17 +27,23 @@
     <a href="../index.html">← Back</a>
     <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
-    <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter doing math">
+    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with chest">
 
-    <h1>Practice 2: Add two numbers</h1>
+    <h1>Practice 2: Chest Report</h1>
 
     <div class="learnbox" id="explainP2">
-      <p>Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b></p>
+      <p>Name: <b><span id="targetName">Friend</span></b> • New gem: <b><span id="newGem">diamond</span></b></p>
       <h4>Why?</h4>
-      <ul class="kids-list"><li>A function is a named trick we can reuse.</li></ul>
+      <ul class="kids-list">
+        <li>Use a <b>function</b> to greet, then work with a <b>list</b>.</li>
+      </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make <code>add(a, b)</code> and inside it <code>print(a + b)</code>.</li>
+        <li>Make <code>chest_report(name, chest, new_item)</code> that:<br>
+          ① prints <code>Hello, NAME!</code><br>
+          ② appends <code>new_item</code> to <code>chest</code><br>
+          ③ prints <code>chest</code> first &amp; last on one line (like <code>ruby diamond</code>)
+        </li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP2')">🔊 Read this aloud</button>
@@ -52,7 +61,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder="# Make add(a, b) that prints a+b"></textarea>
+    <textarea id="editor" class="editor" placeholder='Make chest_report(name, chest, new_item) to greet + append + print first/last.'></textarea>
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
@@ -61,11 +70,19 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small"><code>def add(a, b):</code> then indent and <code>print(a + b)</code>.</div>
+      <div class="small">
+        Start: <code>def chest_report(name, chest, new_item):</code><br>
+        Then:<br>
+        &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
+        &nbsp;&nbsp;<code>chest.append(new_item)</code><br>
+        &nbsp;&nbsp;<code>print(chest[0], chest[-1])</code>
+      </div>
     </details>
     <details id="sol" style="display:none"><summary>Solution (exact)</summary>
-      <pre>def add(a, b):
-    print(a + b)</pre>
+      <pre id="solCode">def chest_report(name, chest, new_item):
+    print("Hello, NAME!")
+    chest.append(NEW)
+    print(chest[0], chest[-1])</pre>
     </details>
   </div>
 
@@ -84,9 +101,21 @@ def setb(stars=None, bugs=None):
     document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
     document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
 
-A = int(document.getElementById('nA').textContent)
-B = int(document.getElementById('nB').textContent)
-STARTER = "def add(a, b):\n    print(a + b)\n"
+NAME = document.getElementById('targetName').textContent
+NEW  = document.getElementById('newGem').textContent
+
+STARTER = (
+    "def chest_report(name, chest, new_item):\n"
+    "    # print(\"Hello, \" + name + \"!\")\n"
+    "    # chest.append(new_item)\n"
+    "    # print(chest[0], chest[-1])\n"
+)
+document.getElementById('solCode').textContent = (
+    "def chest_report(name, chest, new_item):\n"
+    "    print(\"Hello, NAME!\")\n"
+    "    chest.append(NEW)\n"
+    "    print(chest[0], chest[-1])"
+)
 
 class Capture:
     def __enter__(self):
@@ -111,16 +140,18 @@ def run(evt):
         document.getElementById('out').textContent = "Type your code first 🙂"; return
     ns = {}
     try:
-        assert 'def add' in src, "Define a function named add."
+        chest = ["ruby","emerald","sapphire"]
         with Capture() as cap:
             exec(src, ns)
-        assert 'add' in ns, "Function 'add' is missing."
+        assert 'chest_report' in ns, "Make a function named chest_report."
         with Capture() as cap2:
-            ns['add'](A,B)
-        got = cap2.getvalue().strip()
-        need = str(A+B)
-        document.getElementById('out').textContent = f"Your output:\n{got}\n\nExpected:\n{need}"
-        assert got == need, "Make sure it PRINTS a+b inside the function."
+            ns['chest_report'](NAME, chest, NEW)
+        out = cap2.getvalue().strip()
+        # it must have appended NEW
+        assert NEW in chest, f"Append '{NEW}' to chest."
+        expected = f"Hello, {NAME}!\nruby {NEW}"
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        assert out == expected, "Two lines: greeting, then 'ruby NEW'."
         document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
