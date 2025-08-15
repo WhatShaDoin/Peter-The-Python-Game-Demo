@@ -6,25 +6,15 @@
   <title>Lesson 0 — Say Hello</title>
   <meta name="description" content="First Python: make Peter talk with print().">
   <link rel="stylesheet" href="../assets/styles.css?v=5">
-  <!-- PyScript (must be these CDN URLs, in this order) -->
   <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
   <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
-
   <script>
-    // Read-aloud helper
-    window.readBySelector = function(sel){
+    // Read-aloud helper (optional)
+    window.readBySelector = sel => {
       const el = document.querySelector(sel); if(!el) return;
-      const text = el.innerText.replace(/\s+/g,' ').trim();
-      if ('speechSynthesis' in window){
-        speechSynthesis.cancel();
-        speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-      }
+      const txt = el.innerText.replace(/\s+/g,' ').trim();
+      if ('speechSynthesis' in window) { speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(txt)); }
     };
-    // Starters kept in JS (Python never parses these multi-lines)
-    window.L0_START = `# Make Peter speak!
-print("Hello, Python!")  # change the message if you want
-`;
-    window.L0_SOLN = `print("Hello, Python!")`;
   </script>
 </head>
 <body>
@@ -72,13 +62,19 @@ print("Hello, Python!")  # change the message if you want
 </div>
 
 <py-script>
-from js import document, localStorage, window, L0_START, L0_SOLN
+from js import document, localStorage, window
 import sys, io
+
+START = '''# Make Peter speak!
+print("Hello, Python!")  # change the message if you want
+'''
+SOLN = '''print("Hello, Python!")'''
 
 def gi(k):
     v = localStorage.getItem(k)
     try: return int(v) if v is not None else 0
     except: return 0
+
 def setb(stars=None, bugs=None):
     if stars is not None: localStorage.setItem('stars', str(stars))
     if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
@@ -91,13 +87,10 @@ def run(evt):
     f = io.StringIO()
     try:
         old = sys.stdout; sys.stdout = f
-        try:
-            exec(src, {})              # run learner code
-        finally:
-            sys.stdout = old
-        output = f.getvalue()          # real newlines captured here
-        report = "Your output:\n" + output + "\nExpected:\nHello, Python!\n\nAll checks passed! ⭐"
-        out_el.textContent = report
+        try: exec(src, {})
+        finally: sys.stdout = old
+        output = f.getvalue()
+        out_el.textContent = "Your output:\n" + output + "\nExpected:\nHello, Python!\n\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1)
         try: window.confetti()
         except: pass
@@ -105,11 +98,17 @@ def run(evt):
         out_el.textContent = "Bug found: " + str(e)
         setb(bugs=gi('bugs')+1)
 
+# Wire up buttons
 document.getElementById('run').addEventListener('click', run)
-document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L0_START))
-document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', L0_SOLN))
+document.getElementById('fill-start').addEventListener('click',
+    lambda e: setattr(document.getElementById('editor'), 'value', START))
+document.getElementById('fill-solution').addEventListener('click',
+    lambda e: setattr(document.getElementById('editor'), 'value', SOLN))
+
+# Prefill once
 if not document.getElementById('editor').value:
-    document.getElementById('editor').value = L0_START
+    document.getElementById('editor').value = START
+
 setb()
 </py-script>
 </body>
