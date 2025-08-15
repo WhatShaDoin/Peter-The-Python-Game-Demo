@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 2 — Chest Report</title>
+  <title>Practice 2 — Chest Report | Peter the Python Game</title>
+  <meta name="description" content="Practice combo: write chest_report(name, chest, new_item) to greet, append to a list, and print first & last.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Practice 2 — Chest Report">
+  <meta property="og:description" content="Function + list + print in one practice.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Practice 2 — Chest Report">
+  <meta name="twitter:description" content="Greet, append, then print first & last.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Practice 2 — Chest Report",
+    "learningResourceType":"Practice",
+    "description":"Write a function to greet, append to a list, and print first & last.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,7 +38,6 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
-    // random name + new gem
     const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
     const NEWS  = ["diamond","pearl","amethyst","opal","topaz","garnet"];
     const namePick = NAMES[Math.floor(Math.random()*NAMES.length)];
@@ -34,26 +60,20 @@
     <div class="learnbox" id="explainP2">
       <p>Name: <b><span id="targetName">Friend</span></b> • New gem: <b><span id="newGem">diamond</span></b></p>
       <h4>Why?</h4>
-      <ul class="kids-list">
-        <li>Use a <b>function</b> to greet, then work with a <b>list</b>.</li>
-      </ul>
+      <ul class="kids-list"><li>Use a <b>function</b> and a <b>list</b> together.</li></ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make <code>chest_report(name, chest, new_item)</code> that:<br>
-          ① prints <code>Hello, NAME!</code><br>
-          ② appends <code>new_item</code> to <code>chest</code><br>
-          ③ prints <code>chest</code> first &amp; last on one line (like <code>ruby diamond</code>)
-        </li>
+        <li>Make <code>chest_report(name, chest, new_item)</code> that:</li>
+        <li>① prints <code>Hello, NAME!</code></li>
+        <li>② <code>chest.append(new_item)</code></li>
+        <li>③ <code>print(chest[0], chest[-1])</code> → like <code>ruby diamond</code></li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP2')">🔊 Read this aloud</button>
       </div>
     </div>
 
-    <div class="hud">
-      <div id="stars" class="badge">⭐ Stars: 0</div>
-      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
-    </div>
+    <div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div>
 
     <div class="toolbar">
       <button id="starter" class="btn ghost" type="button">Insert Starter</button>
@@ -71,8 +91,7 @@
 
     <details id="hint" style="display:none"><summary>Hint</summary>
       <div class="small">
-        Start: <code>def chest_report(name, chest, new_item):</code><br>
-        Then:<br>
+        <code>def chest_report(name, chest, new_item):</code><br>
         &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
         &nbsp;&nbsp;<code>chest.append(new_item)</code><br>
         &nbsp;&nbsp;<code>print(chest[0], chest[-1])</code>
@@ -105,15 +124,15 @@ NAME = document.getElementById('targetName').textContent
 NEW  = document.getElementById('newGem').textContent
 
 STARTER = (
-    "def chest_report(name, chest, new_item):\n"
-    "    # print(\"Hello, \" + name + \"!\")\n"
-    "    # chest.append(new_item)\n"
-    "    # print(chest[0], chest[-1])\n"
+    "def chest_report(name, chest, new_item):\\n"
+    "    # print(\\"Hello, \\" + name + \\"!\\")\\n"
+    "    # chest.append(new_item)\\n"
+    "    # print(chest[0], chest[-1])\\n"
 )
 document.getElementById('solCode').textContent = (
-    "def chest_report(name, chest, new_item):\n"
-    "    print(\"Hello, NAME!\")\n"
-    "    chest.append(NEW)\n"
+    "def chest_report(name, chest, new_item):\\n"
+    "    print(\\"Hello, NAME!\\")\\n"
+    "    chest.append(NEW)\\n"
     "    print(chest[0], chest[-1])"
 )
 
@@ -147,15 +166,14 @@ def run(evt):
         with Capture() as cap2:
             ns['chest_report'](NAME, chest, NEW)
         out = cap2.getvalue().strip()
-        # it must have appended NEW
         assert NEW in chest, f"Append '{NEW}' to chest."
-        expected = f"Hello, {NAME}!\nruby {NEW}"
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        expected = f"Hello, {NAME}!\\nruby {NEW}"
+        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\n{expected}"
         assert out == expected, "Two lines: greeting, then 'ruby NEW'."
-        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
