@@ -9,22 +9,11 @@
   <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
   <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector = function(sel){
+    window.readBySelector = sel => {
       const el = document.querySelector(sel); if(!el) return;
       const t = el.innerText.replace(/\s+/g,' ').trim();
       if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-    window.P2_START = `def chest_report(name, chest, new_item):
-    # 1) print Hello, NAME! (use name.upper())
-    # 2) add new_item into chest with chest.append(...)
-    # 3) print(chest[0], chest[-1])
-    pass
-`;
-    window.P2_SOLN = `def chest_report(name, chest, new_item):
-    print("Hello, " + name.upper() + "!")
-    chest.append(new_item)
-    print(chest[0], chest[-1])
-`;
   </script>
 </head>
 <body>
@@ -81,12 +70,23 @@
 </div>
 
 <py-script>
-from js import document, localStorage, window, P2_START, P2_SOLN
+from js import document, localStorage, window
 import random, re, sys, io
+
+START = '''def chest_report(name, chest, new_item):
+    # 1) print Hello, NAME! (use name.upper())
+    # 2) add new_item into chest with chest.append(...)
+    # 3) print(chest[0], chest[-1])
+    pass
+'''
+SOLN = '''def chest_report(name, chest, new_item):
+    print("Hello, " + name.upper() + "!")
+    chest.append(new_item)
+    print(chest[0], chest[-1])
+'''
 
 names = ["Kai","Ava","Milo","Zoe","Lia","Noah","Ivy","Owen","Maya","Leo"]
 gems  = ["ruby","diamond","sapphire","emerald","garnet","opal","pearl"]
-
 NAME = random.choice(names); NEW = random.choice(gems)
 document.getElementById('nm').textContent  = NAME
 document.getElementById('gem').textContent = NEW
@@ -125,10 +125,12 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P2_START))
-document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P2_SOLN))
+document.getElementById('fill-start').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', START))
+document.getElementById('fill-solution').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', SOLN))
 if not document.getElementById('editor').value:
-    document.getElementById('editor').value = P2_START
+  document.getElementById('editor').value = START
 setb()
 </py-script>
 </body>
