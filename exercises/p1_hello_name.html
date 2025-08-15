@@ -3,179 +3,72 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 1 — Greet & Add | Peter the Python Game</title>
-  <meta name="description" content="Practice combo: write greet_add(name, a, b) that prints Hello, NAME! and the sum. Random name & numbers each time.">
+  <title>Practice 1 — Greet & Add</title>
+  <meta name="description" content="Make one function that says Hello, NAME! (uppercase) and prints a + b.">
 
-  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html">
+  <link rel="stylesheet" href="../assets/styles.css?v=3">
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Practice 1 — Greet & Add">
-  <meta property="og:description" content="Function + print + numbers in one practice.">
-  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html">
-  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Practice 1 — Greet & Add">
-  <meta name="twitter:description" content="Say hello and print a sum (random each time).">
-  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LearningResource",
-    "name":"Practice 1 — Greet & Add",
-    "learningResourceType":"Practice",
-    "description":"Write greet_add(name, a, b) that prints Hello and the sum.",
-    "educationalLevel":"Beginner",
-    "inLanguage":"en",
-    "isAccessibleForFree":"true",
-    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html"
-  }
-  </script>
-
-  <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
-  <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
-  <script defer src="../assets/app.js"></script>
-
+  <!-- Read-aloud fallback -->
   <script>
-    const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
-    const pick = NAMES[Math.floor(Math.random()*NAMES.length)];
-    const A = Math.floor(Math.random()*5)+1;
-    const B = Math.floor(Math.random()*5)+1;
-    addEventListener('DOMContentLoaded', () => {
-      document.getElementById('targetName').textContent = pick;
-      document.getElementById('nA').textContent = A;
-      document.getElementById('nB').textContent = B;
-    });
+    window.readBySelector ||= function(sel){
+      const el = document.querySelector(sel);
+      if(!el) return;
+      const text = el.innerText.replace(/\s+/g,' ').trim();
+      if('speechSynthesis' in window){
+        speechSynthesis.cancel();
+        speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+      }
+    };
   </script>
+
+  <!-- Keep starter/solution in JS so Python never parses multi-line strings -->
+  <script>
+    window.P1_STARTER = `def greet_and_add(name, a, b):
+    # 1) say Hello, NAME! using name.upper()
+    # 2) print the sum of a and b
+    pass
+`;
+    window.P1_SOLUTION = `def greet_and_add(name, a, b):
+    print("Hello, " + name.upper() + "!")
+    print(a + b)
+`;
+  </script>
+
+  <script defer src="../assets/app.js"></script>
 </head>
 <body>
-  <div class="card">
+<div class="container">
+  <div class="card" id="card">
     <a href="../index.html">← Back</a>
     <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
-    <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter says hello">
+    <h1>Practice 1: Greet &amp; Add</h1>
 
-    <h1>Practice 1: Greet & Add</h1>
+    <p><b>Name:</b> <span id="nm">Ava</span> • <b>a:</b> <span id="aa">2</span> • <b>b:</b> <span id="bb">3</span></p>
 
-    <div class="learnbox" id="explainP1">
-      <p>Name: <b><span id="targetName">Friend</span></b> • Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b></p>
+    <div class="learnbox" id="why">
       <h4>Why?</h4>
-      <ul class="kids-list"><li>Combine a <b>function</b> with talking (<code>print()</code>) and a tiny math trick.</li></ul>
+      <p>Practice a single <b>function</b> that prints a greeting and a simple sum.</p>
+
       <h4>What you’ll type</h4>
-      <ul class="kids-list">
-        <li>Make <code>greet_add(name, a, b)</code> that prints two lines:</li>
-        <li>① <code>Hello, NAME!</code></li>
-        <li>② the sum of <code>a</code> and <code>b</code></li>
+      <ul>
+        <li>Make <code>greet_and_add(name, a, b)</code> that:</li>
+        <li>① prints <b>Hello, NAME!</b> (NAME in <b>UPPERCASE</b>)</li>
+        <li>② prints the sum <code>a + b</code></li>
       </ul>
       <div class="ttsbar">
-        <button class="btn ghost" onclick="readBySelector('#explainP1')">🔊 Read this aloud</button>
+        <button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button>
       </div>
     </div>
 
-    <div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div>
+    <div class="hud">
+      <div id="stars" class="badge">⭐ Stars: 0</div>
+      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
+    </div>
 
     <div class="toolbar">
-      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
-      <button id="hintBtn" class="btn ghost" type="button">Show Hint</button>
-      <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
-    </div>
-
-    <textarea id="editor" class="editor" placeholder='Make greet_add(name, a, b) that prints two lines.'></textarea>
-
-    <p>
-      <button id="run" class="btn" type="button">Run ▶</button>
-      <a class="btn ghost" href="p2_add_random.html">Next Practice →</a>
-    </p>
-    <pre id="out"></pre>
-
-    <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">
-        <code>def greet_add(name, a, b):</code><br>
-        &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
-        &nbsp;&nbsp;<code>print(a + b)</code>
-      </div>
-    </details>
-    <details id="sol" style="display:none"><summary>Solution (exact)</summary>
-      <pre id="solCode">def greet_add(name, a, b):
-    print("Hello, NAME!")
-    print(a + b)</pre>
-    </details>
-  </div>
-
-  <script type="py">
-from js import document, localStorage, window
-from pyodide.ffi import create_proxy
-import io, sys
-
-def gi(k):
-    v = localStorage.getItem(k)
-    try: return int(v) if v is not None else 0
-    except: return 0
-def setb(stars=None, bugs=None):
-    if stars is not None: localStorage.setItem('stars', str(stars))
-    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
-    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
-    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
-
-name = document.getElementById('targetName').textContent
-A = int(document.getElementById('nA').textContent)
-B = int(document.getElementById('nB').textContent)
-
-STARTER = (
-    "def greet_add(name, a, b):\\n"
-    "    # print(\\"Hello, \\" + name + \\"!\\")\\n"
-    "    # print(a + b)\\n"
-)
-document.getElementById('solCode').textContent = (
-    "def greet_add(name, a, b):\\n"
-    "    print(\\"Hello, NAME!\\")\\n"
-    "    print(a + b)"
-)
-
-class Capture:
-    def __enter__(self):
-        self._old = sys.stdout
-        self.buf = io.StringIO()
-        sys.stdout = self.buf
-        return self.buf
-    def __exit__(self, *args):
-        sys.stdout = self._old
-
-def insert_starter(evt): document.getElementById('editor').value = STARTER
-def toggle_hint(evt):
-    h = document.getElementById('hint')
-    h.style.display = 'block' if h.style.display == 'none' else 'none'
-def toggle_sol(evt):
-    s = document.getElementById('sol')
-    s.style.display = 'block' if s.style.display == 'none' else 'none'
-
-def run(evt):
-    src = document.getElementById('editor').value
-    if not src.strip():
-        document.getElementById('out').textContent = "Type your code first 🙂"; return
-    ns = {}
-    try:
-        with Capture() as cap:
-            exec(src, ns)
-        assert 'greet_add' in ns, "Make a function named greet_add."
-        with Capture() as cap2:
-            ns['greet_add'](name, A, B)
-        out = cap2.getvalue().strip()
-        expected = f"Hello, {name}!\\n{A+B}"
-        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\n{expected}"
-        assert out == expected, "Two lines: greeting, then the sum."
-        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
-        setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
-    except Exception as e:
-        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
-        setb(bugs=gi('bugs')+1)
-
-document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
-document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
-document.getElementById('solBtn').addEventListener('click', create_proxy(toggle_sol))
-document.getElementById('run').addEventListener('click', create_proxy(run))
-setb()
-  </script>
-</body>
-</html>
+      <button id="fill-start" class="btn">Insert Starter</button>
+      <button id="show-hint" class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
+      <button id="fill-s
