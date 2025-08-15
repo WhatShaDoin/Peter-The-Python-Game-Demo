@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 3 — Math Treasure</title>
+  <title>Practice 3 — Math Treasure | Peter the Python Game</title>
+  <meta name="description" content="Practice combo: write add() and math_treasure() to greet, print a sum, and show 'ruby diamond' from a list.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p3_list_chest.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Practice 3 — Math Treasure">
+  <meta property="og:description" content="Two functions + list in one practice.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p3_list_chest.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Practice 3 — Math Treasure">
+  <meta name="twitter:description" content="Greet, add, and print ruby diamond.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Practice 3 — Math Treasure",
+    "learningResourceType":"Practice",
+    "description":"Write add() and math_treasure() to greet, print sum, and show 'ruby diamond'.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p3_list_chest.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,7 +38,6 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
-    // random name + numbers
     const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
     const namePick = NAMES[Math.floor(Math.random()*NAMES.length)];
     const A = Math.floor(Math.random()*6)+1;
@@ -35,27 +61,21 @@
     <div class="learnbox" id="explainP3">
       <p>Name: <b><span id="targetName">Friend</span></b> • Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b> • Chest starts with <code>["ruby","emerald","sapphire"]</code></p>
       <h4>Why?</h4>
-      <ul class="kids-list">
-        <li>Use a helper <b>function</b> to add, say the result, and work with a <b>list</b>.</li>
-      </ul>
+      <ul class="kids-list"><li>Use a helper <b>function</b> to add, say the result, and work with a <b>list</b>.</li></ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
         <li>Make <code>add(a, b)</code> that <b>prints</b> the sum.</li>
-        <li>Make <code>math_treasure(name, a, b)</code> that:<br>
-          ① prints <code>Hello, NAME!</code><br>
-          ② calls <code>add(a, b)</code> (so the sum prints)<br>
-          ③ makes a list, appends <code>"diamond"</code>, then prints first &amp; last (like <code>ruby diamond</code>)
-        </li>
+        <li>Make <code>math_treasure(name, a, b)</code> that:</li>
+        <li>① prints <code>Hello, NAME!</code></li>
+        <li>② calls <code>add(a, b)</code></li>
+        <li>③ makes a list, appends <code>"diamond"</code>, prints <code>ruby diamond</code></li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP3')">🔊 Read this aloud</button>
       </div>
     </div>
 
-    <div class="hud">
-      <div id="stars" class="badge">⭐ Stars: 0</div>
-      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
-    </div>
+    <div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div>
 
     <div class="toolbar">
       <button id="starter" class="btn ghost" type="button">Insert Starter</button>
@@ -115,23 +135,23 @@ A = int(document.getElementById('nA').textContent)
 B = int(document.getElementById('nB').textContent)
 
 STARTER = (
-    "def add(a, b):\n"
-    "    # print(a + b)\n\n"
-    "def math_treasure(name, a, b):\n"
-    "    # print(\"Hello, \" + name + \"!\")\n"
-    "    # add(a, b)\n"
-    "    # gems = [\"ruby\", \"emerald\", \"sapphire\"]\n"
-    "    # gems.append(\"diamond\")\n"
-    "    # print(gems[0], gems[-1])\n"
+    "def add(a, b):\\n"
+    "    # print(a + b)\\n\\n"
+    "def math_treasure(name, a, b):\\n"
+    "    # print(\\"Hello, \\" + name + \\"!\\")\\n"
+    "    # add(a, b)\\n"
+    "    # gems = [\\"ruby\\", \\"emerald\\", \\"sapphire\\"]\\n"
+    "    # gems.append(\\"diamond\\")\\n"
+    "    # print(gems[0], gems[-1])\\n"
 )
 document.getElementById('solCode').textContent = (
-    "def add(a, b):\n"
-    "    print(a + b)\n\n"
-    "def math_treasure(name, a, b):\n"
-    "    print(\"Hello, NAME!\")\n"
-    "    add(a, b)\n"
-    "    gems = [\"ruby\", \"emerald\", \"sapphire\"]\n"
-    "    gems.append(\"diamond\")\n"
+    "def add(a, b):\\n"
+    "    print(a + b)\\n\\n"
+    "def math_treasure(name, a, b):\\n"
+    "    print(\\"Hello, NAME!\\")\\n"
+    "    add(a, b)\\n"
+    "    gems = [\\"ruby\\", \\"emerald\\", \\"sapphire\\"]\\n"
+    "    gems.append(\\"diamond\\")\\n"
     "    print(gems[0], gems[-1])"
 )
 
@@ -161,22 +181,20 @@ def run(evt):
     try:
         with Capture() as cap:
             exec(src, ns)
-        # require both functions
         assert 'add' in ns and callable(ns['add']), "Make add(a,b)."
         assert 'math_treasure' in ns and callable(ns['math_treasure']), "Make math_treasure(name,a,b)."
-        # call math_treasure and capture all printing
         with Capture() as cap2:
             ns['math_treasure'](NAME, A, B)
         out = cap2.getvalue().strip()
 
-        expected = f"Hello, {NAME}!\n{A+B}\nruby diamond"
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        expected = f"Hello, {NAME}!\\n{A+B}\\nruby diamond"
+        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\n{expected}"
         assert out == expected, "Three lines: greeting, sum, then 'ruby diamond'."
 
-        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
