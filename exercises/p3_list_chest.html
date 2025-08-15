@@ -9,36 +9,11 @@
   <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
   <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector = function(sel){
+    window.readBySelector = sel => {
       const el = document.querySelector(sel); if(!el) return;
       const t = el.innerText.replace(/\s+/g,' ').trim();
       if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-    window.P3_START = `def greet(name):
-    # print Hello, NAME! (uppercase)
-    pass
-
-def add(a, b):
-    # return the sum
-    pass
-
-def do_math_treasure(name, chest):
-    # 1) call greet(name)
-    # 2) print add(2, 3)
-    # 3) print chest[0], chest[1]
-    pass
-`;
-    window.P3_SOLN = `def greet(name):
-    print("Hello, " + name.upper() + "!")
-
-def add(a, b):
-    return a + b
-
-def do_math_treasure(name, chest):
-    greet(name)
-    print(add(2, 3))
-    print(chest[0], chest[1])
-`;
   </script>
 </head>
 <body>
@@ -88,8 +63,34 @@ def do_math_treasure(name, chest):
 </div>
 
 <py-script>
-from js import document, localStorage, window, P3_START, P3_SOLN
+from js import document, localStorage, window
 import random, re, sys, io
+
+START = '''def greet(name):
+    # print Hello, NAME! (uppercase)
+    pass
+
+def add(a, b):
+    # return the sum
+    pass
+
+def do_math_treasure(name, chest):
+    # 1) call greet(name)
+    # 2) print add(2, 3)
+    # 3) print chest[0], chest[1]
+    pass
+'''
+SOLN = '''def greet(name):
+    print("Hello, " + name.upper() + "!")
+
+def add(a, b):
+    return a + b
+
+def do_math_treasure(name, chest):
+    greet(name)
+    print(add(2, 3))
+    print(chest[0], chest[1])
+'''
 
 names = ["Kai","Ava","Milo","Zoe","Lia","Noah","Ivy","Owen","Maya","Leo"]
 NAME = random.choice(names)
@@ -129,10 +130,12 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P3_START))
-document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P3_SOLN))
+document.getElementById('fill-start').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', START))
+document.getElementById('fill-solution').addEventListener('click',
+  lambda e: setattr(document.getElementById('editor'), 'value', SOLN))
 if not document.getElementById('editor').value:
-    document.getElementById('editor').value = P3_START
+  document.getElementById('editor').value = START
 setb()
 </py-script>
 </body>
