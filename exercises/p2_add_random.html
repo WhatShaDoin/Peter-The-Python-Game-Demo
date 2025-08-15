@@ -4,29 +4,20 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Practice 2 — Chest Report</title>
-  <meta name="description" content="Use a function and a list: greet in UPPERCASE, append a new gem, then print first & last.">
-
-  <link rel="stylesheet" href="../assets/styles.css?v=3">
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
+  <meta name="description" content="Use a function and a list: greet, append a new gem, and print first & last gems.">
+  <link rel="stylesheet" href="../assets/styles.css?v=5">
+  <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
+  <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector ||= function(sel){
-      const el = document.querySelector(sel);
-      if(!el) return;
-      const text = el.innerText.replace(/\s+/g,' ').trim();
-      if('speechSynthesis' in window){
-        speechSynthesis.cancel();
-        speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-      }
+    window.readBySelector = function(sel){
+      const el = document.querySelector(sel); if(!el) return;
+      const t = el.innerText.replace(/\s+/g,' ').trim();
+      if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-  </script>
-
-  <script>
     window.P2_START = `def chest_report(name, chest, new_item):
-    # 1) say Hello, NAME! (use name.upper())
-    # 2) add new_item to chest with chest.append(...)
-    # 3) print first and last item: print(chest[0], chest[-1])
+    # 1) print Hello, NAME! (use name.upper())
+    # 2) add new_item into chest with chest.append(...)
+    # 3) print(chest[0], chest[-1])
     pass
 `;
     window.P2_SOLN = `def chest_report(name, chest, new_item):
@@ -35,31 +26,27 @@
     print(chest[0], chest[-1])
 `;
   </script>
-
-  <script defer src="../assets/app.js"></script>
 </head>
 <body>
 <div class="container">
   <div class="card" id="card">
     <a href="../index.html">← Back</a>
-    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
+    <img class="peter-hero" src="../assets/img/peter-cover.webp" alt="Peter" loading="lazy">
 
     <h1>Practice 2: Chest Report</h1>
     <p><b>Name:</b> <span id="nm">Kai</span> • <b>New gem:</b> <span id="gem">garnet</span></p>
 
-    <div class="learnbox" id="why">
+    <div id="why" class="learnbox">
       <h4>Why?</h4>
       <p>Use a <b>function</b> and a <b>list</b> together.</p>
       <h4>What you’ll type</h4>
       <ul>
         <li>Make <code>chest_report(name, chest, new_item)</code> that:</li>
-        <li>① <code>print</code> <b>Hello, NAME!</b> (uppercase)</li>
-        <li>② <code>chest.append(new_item)</code></li>
-        <li>③ <code>print(chest[0], chest[-1])</code> → like <code>ruby diamond</code></li>
+        <li>① says hello in UPPERCASE</li>
+        <li>② appends the new gem</li>
+        <li>③ prints first &amp; last gems</li>
       </ul>
-      <div class="ttsbar">
-        <button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button>
-      </div>
+      <button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button>
     </div>
 
     <div class="hud">
@@ -69,7 +56,7 @@
 
     <div class="toolbar">
       <button id="fill-start" class="btn">Insert Starter</button>
-      <button id="show-hint" class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
+      <button class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
       <button id="fill-solution" class="btn ghost">Show Solution</button>
     </div>
 
@@ -100,8 +87,7 @@ import random, re, sys, io
 names = ["Kai","Ava","Milo","Zoe","Lia","Noah","Ivy","Owen","Maya","Leo"]
 gems  = ["ruby","diamond","sapphire","emerald","garnet","opal","pearl"]
 
-NAME = random.choice(names)
-NEW  = random.choice(gems)
+NAME = random.choice(names); NEW = random.choice(gems)
 document.getElementById('nm').textContent  = NAME
 document.getElementById('gem').textContent = NEW
 
@@ -109,37 +95,28 @@ def gi(k):
     v = localStorage.getItem(k)
     try: return int(v) if v is not None else 0
     except: return 0
-
 def setb(stars=None, bugs=None):
     if stars is not None: localStorage.setItem('stars', str(stars))
-    if bugs is not None: localStorage.setItem('bugs', str(bugs))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
     document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
     document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
 
 def run(evt):
-    ns = {}
-    src = document.getElementById('editor').value
-    out_el = document.getElementById('out')
+    ns = {}; src = document.getElementById('editor').value; out_el = document.getElementById('out')
     f = io.StringIO()
     try:
         exec(src, ns)
         assert 'chest_report' in ns, "Make a function named chest_report(name, chest, new_item)."
-
         chest = ["ruby","diamond"]
         old = sys.stdout; sys.stdout = f
-        try:
-            ns['chest_report'](NAME, chest, NEW)
-        finally:
-            sys.stdout = old
-
+        try: ns['chest_report'](NAME, chest, NEW)
+        finally: sys.stdout = old
         output = f.getvalue()
         simple = re.sub(r'[^A-Z0-9 !+-]', '', output.upper())
-
         assert ("HELLO " + NAME.upper() + "!") in simple, "Say 'Hello, NAME!' (uppercase)."
-        assert chest[-1] == NEW, "Did you append the new gem to the chest?"
-        assert (chest[0] in output) and (chest[-1] in output), "Print first and last items of the chest."
-
-        out_el.textContent = "All checks passed! ⭐"
+        assert chest[-1] == NEW, "Did you append the new gem?"
+        assert (chest[0] in output) and (chest[-1] in output), "Print first & last items."
+        out_el.textContent = "All checks passed! ⭐\n" + output
         setb(stars=gi('stars')+1)
         try: window.confetti()
         except: pass
@@ -148,12 +125,10 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-
-def fill_start(evt): document.getElementById('editor').value = P2_START
-def fill_solution(evt): document.getElementById('editor').value = P2_SOLN
-document.getElementById('fill-start').addEventListener('click', fill_start)
-document.getElementById('fill-solution').addEventListener('click', fill_solution)
-
+document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P2_START))
+document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P2_SOLN))
+if not document.getElementById('editor').value:
+    document.getElementById('editor').value = P2_START
 setb()
 </py-script>
 </body>
