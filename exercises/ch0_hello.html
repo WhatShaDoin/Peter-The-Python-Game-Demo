@@ -3,7 +3,35 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Lesson 0 — Say Hello</title>
+  <title>Lesson 0 — Say Hello | Peter the Python Game</title>
+  <meta name="description" content="Kid-friendly Python Lesson 0: learn print() by making Peter say 'Hello, Python!'. Read-aloud and instant feedback with stars and bugs.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Lesson 0 — Say Hello">
+  <meta property="og:description" content="Make Peter talk with print().">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lesson 0 — Say Hello">
+  <meta name="twitter:description" content="Make Peter say 'Hello, Python!' with print().">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <!-- JSON-LD: LearningResource -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Lesson 0 — Say Hello",
+    "learningResourceType":"Lesson",
+    "description":"Kid-friendly Python: learn print() by saying 'Hello, Python!'",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/ch0_hello.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -55,7 +83,7 @@ from js import document, localStorage, window
 from pyodide.ffi import create_proxy
 import io, sys, re
 
-STARTER = 'print("Hello, Python!")\n'
+STARTER = 'print("Hello, Python!")\\n'
 
 class Capture:
     def __enter__(self):
@@ -90,15 +118,15 @@ def run(evt):
             exec(src, {})
         out = cap.getvalue().strip()
         ok = bool(re.search(r"hello.*python", out.lower()))
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\nHello, Python!"
+        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\nHello, Python!"
         if ok:
-            document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+            document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
             setb(stars=gi('stars')+1)
             window.launchConfetti(); window.playConfettiSound()
         else:
             raise Exception('Make sure it prints exactly: Hello, Python!')
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
