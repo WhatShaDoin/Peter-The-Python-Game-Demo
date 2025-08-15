@@ -4,8 +4,34 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Peter the Python Game — Demo</title>
-  <!-- New, kid-friendly meta description -->
   <meta name="description" content="Learn Python the kid-friendly way with Peter the Python: tiny stories, read-aloud help, type-to-try challenges, stars for wins and bugs as helpful clues—right in your browser (PyScript).">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Peter the Python Game — Demo">
+  <meta property="og:description" content="Kid-friendly Python lessons with stories, read-aloud, and instant feedback.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Peter the Python Game — Demo">
+  <meta name="twitter:description" content="Learn Python the kid-friendly way, in your browser.">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Peter the Python Game — Demo",
+    "url": "https://whatshadoin.github.io/Peter-The-Python-Game-Demo/",
+    "description": "Kid-friendly Python: tiny stories, read-aloud, and instant feedback using PyScript.",
+    "inLanguage": "en"
+  }
+  </script>
+
   <link rel="stylesheet" href="assets/styles.css">
   <script defer src="assets/app.js"></script>
 </head>
@@ -13,13 +39,11 @@
   <div class="container">
     <div class="card">
       <h1>Peter the Python Game — Demo</h1>
-      <!-- Updated home page description -->
       <h2>
         Learn Python the kid-friendly way: tiny stories, <em>read-aloud</em> help,
         type-to-try challenges, ⭐ stars for wins and 🐞 bugs as clues — all in your browser (PyScript).
       </h2>
 
-      <!-- Smaller cover -->
       <p><img class="cover" src="assets/img/peter-cover.webp" alt="Peter the Python cover" loading="lazy"></p>
 
       <div class="hud">
@@ -27,14 +51,12 @@
         <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
       </div>
 
-      <!-- Go Pro -->
       <p style="margin:.25rem 0 1rem">
         <a class="btn" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">
           Go Pro — Full Course ▶
         </a>
       </p>
 
-      <!-- Friendly “About this demo” box -->
       <div class="learnbox" id="about-demo">
         <h4>What happens here</h4>
         <ul class="kids-list">
@@ -85,32 +107,25 @@
         </div>
       </div>
 
-      <!-- Mini Glossary (with spaced symbols) -->
+      <!-- Mini Glossary -->
       <div class="learnbox" id="mini-glossary" style="margin-top:1rem">
         <h4>Mini Glossary</h4>
         <div class="dl">
           <div class="dt"><span class="sym">( )</span> Parentheses</div>
           <div class="dd">Hold things together or pass things into functions. <em>Memory:</em> Peter’s <b>hands</b>—they hold the stuff!</div>
-
           <div class="dt"><span class="sym">[ ]</span> Square brackets</div>
           <div class="dd">Make a list or pick items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
-
           <div class="dt"><span class="sym">{ }</span> Curly braces</div>
           <div class="dd">Make a set or dictionary (named boxes). <em>Memory:</em> a <b>toolbox</b> with labeled drawers.</div>
-
           <div class="dt"><span class="sym">: </span> Colon</div>
           <div class="dd">Starts a block (tells the helper what comes next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
-
           <div class="dt"><span class="sym">print</span></div>
           <div class="dd">Say it on the screen. <em>Memory:</em> Peter’s <b>voice</b>.</div>
-
           <div class="dt"><span class="sym">return</span></div>
           <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b>—send work out, answer comes back.</div>
-
           <div class="dt"><span class="sym">-1</span></div>
           <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
         </div>
-
         <div class="ttsbar">
           <button class="btn ghost" onclick="readBySelector('#mini-glossary')">🔊 Read this aloud</button>
         </div>
