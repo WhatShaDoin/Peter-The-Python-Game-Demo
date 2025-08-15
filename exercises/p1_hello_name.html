@@ -3,7 +3,34 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 1 — Greet & Add</title>
+  <title>Practice 1 — Greet & Add | Peter the Python Game</title>
+  <meta name="description" content="Practice combo: write greet_add(name, a, b) that prints Hello, NAME! and the sum. Random name & numbers each time.">
+
+  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Practice 1 — Greet & Add">
+  <meta property="og:description" content="Function + print + numbers in one practice.">
+  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html">
+  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Practice 1 — Greet & Add">
+  <meta name="twitter:description" content="Say hello and print a sum (random each time).">
+  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LearningResource",
+    "name":"Practice 1 — Greet & Add",
+    "learningResourceType":"Practice",
+    "description":"Write greet_add(name, a, b) that prints Hello and the sum.",
+    "educationalLevel":"Beginner",
+    "inLanguage":"en",
+    "isAccessibleForFree":"true",
+    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p1_hello_name.html"
+  }
+  </script>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,10 +38,9 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
-    // random name + numbers
     const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
     const pick = NAMES[Math.floor(Math.random()*NAMES.length)];
-    const A = Math.floor(Math.random()*5)+1;  // 1..5
+    const A = Math.floor(Math.random()*5)+1;
     const B = Math.floor(Math.random()*5)+1;
     addEventListener('DOMContentLoaded', () => {
       document.getElementById('targetName').textContent = pick;
@@ -35,25 +61,19 @@
     <div class="learnbox" id="explainP1">
       <p>Name: <b><span id="targetName">Friend</span></b> • Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b></p>
       <h4>Why?</h4>
-      <ul class="kids-list">
-        <li>Combine a <b>function</b> with talking (<code>print()</code>) and a tiny math trick.</li>
-      </ul>
+      <ul class="kids-list"><li>Combine a <b>function</b> with talking (<code>print()</code>) and a tiny math trick.</li></ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make <code>greet_add(name, a, b)</code> that prints exactly two lines:<br>
-          ① <code>Hello, NAME!</code><br>
-          ② the sum of <code>a</code> and <code>b</code>
-        </li>
+        <li>Make <code>greet_add(name, a, b)</code> that prints two lines:</li>
+        <li>① <code>Hello, NAME!</code></li>
+        <li>② the sum of <code>a</code> and <code>b</code></li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP1')">🔊 Read this aloud</button>
       </div>
     </div>
 
-    <div class="hud">
-      <div id="stars" class="badge">⭐ Stars: 0</div>
-      <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
-    </div>
+    <div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div>
 
     <div class="toolbar">
       <button id="starter" class="btn ghost" type="button">Insert Starter</button>
@@ -103,13 +123,13 @@ A = int(document.getElementById('nA').textContent)
 B = int(document.getElementById('nB').textContent)
 
 STARTER = (
-    "def greet_add(name, a, b):\n"
-    "    # print(\"Hello, \" + name + \"!\")\n"
-    "    # print(a + b)\n"
+    "def greet_add(name, a, b):\\n"
+    "    # print(\\"Hello, \\" + name + \\"!\\")\\n"
+    "    # print(a + b)\\n"
 )
 document.getElementById('solCode').textContent = (
-    "def greet_add(name, a, b):\n"
-    "    print(\"Hello, NAME!\")\n"
+    "def greet_add(name, a, b):\\n"
+    "    print(\\"Hello, NAME!\\")\\n"
     "    print(a + b)"
 )
 
@@ -142,13 +162,13 @@ def run(evt):
         with Capture() as cap2:
             ns['greet_add'](name, A, B)
         out = cap2.getvalue().strip()
-        expected = f"Hello, {name}!\n{A+B}"
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        expected = f"Hello, {name}!\\n{A+B}"
+        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\n{expected}"
         assert out == expected, "Two lines: greeting, then the sum."
-        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
-        document.getElementById('out').textContent += f"\n\nBug found: {e}"
+        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
