@@ -3,184 +3,182 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 2 — Chest Report | Peter the Python Game</title>
-  <meta name="description" content="Practice combo: write chest_report(name, chest, new_item) to greet, append to a list, and print first & last.">
+  <title>Practice 2 — Chest Report</title>
+  <meta name="description" content="Practice combining a function and a list: greet in UPPERCASE, append a new gem, then print the first and last gem.">
 
-  <link rel="canonical" href="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html">
+  <link rel="stylesheet" href="../assets/styles.css?v=3">
 
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Practice 2 — Chest Report">
-  <meta property="og:description" content="Function + list + print in one practice.">
-  <meta property="og:url" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html">
-  <meta property="og:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Practice 2 — Chest Report">
-  <meta name="twitter:description" content="Greet, append, then print first & last.">
-  <meta name="twitter:image" content="https://whatshadoin.github.io/Peter-The-Python-Game-Demo/assets/img/peter-cover.webp">
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"LearningResource",
-    "name":"Practice 2 — Chest Report",
-    "learningResourceType":"Practice",
-    "description":"Write a function to greet, append to a list, and print first & last.",
-    "educationalLevel":"Beginner",
-    "inLanguage":"en",
-    "isAccessibleForFree":"true",
-    "url":"https://whatshadoin.github.io/Peter-The-Python-Game-Demo/exercises/p2_add_random.html"
-  }
-  </script>
-
-  <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
-  <script type="module" src="https://pyscript.net/releases/2024.6.1/core.js"></script>
-  <script defer src="../assets/app.js"></script>
-
+  <!-- Small fallback for read-aloud in case app.js hasn’t loaded yet -->
   <script>
-    const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
-    const NEWS  = ["diamond","pearl","amethyst","opal","topaz","garnet"];
-    const namePick = NAMES[Math.floor(Math.random()*NAMES.length)];
-    const newGem   = NEWS[Math.floor(Math.random()*NEWS.length)];
-    addEventListener('DOMContentLoaded', () => {
-      document.getElementById('targetName').textContent = namePick;
-      document.getElementById('newGem').textContent = newGem;
-    });
+    window.readBySelector ||= function(sel){
+      const el = document.querySelector(sel);
+      if(!el) return;
+      const text = el.innerText.replace(/\s+/g,' ').trim();
+      if('speechSynthesis' in window){
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(u);
+      }
+    };
   </script>
+
+  <script defer src="../assets/app.js"></script>
 </head>
 <body>
-  <div class="card">
-    <a href="../index.html">← Back</a>
-    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
+  <div class="container">
+    <div class="card" id="card">
+      <a href="../index.html">← Back</a>
+      <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
-    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with chest">
+      <h1>Practice 2: Chest Report</h1>
 
-    <h1>Practice 2: Chest Report</h1>
+      <p><b>Name:</b> <span id="nm">Kai</span> • <b>New gem:</b> <span id="gem">garnet</span></p>
 
-    <div class="learnbox" id="explainP2">
-      <p>Name: <b><span id="targetName">Friend</span></b> • New gem: <b><span id="newGem">diamond</span></b></p>
-      <h4>Why?</h4>
-      <ul class="kids-list"><li>Use a <b>function</b> and a <b>list</b> together.</li></ul>
-      <h4>What you’ll type</h4>
-      <ul class="kids-list">
-        <li>Make <code>chest_report(name, chest, new_item)</code> that:</li>
-        <li>① prints <code>Hello, NAME!</code></li>
-        <li>② <code>chest.append(new_item)</code></li>
-        <li>③ <code>print(chest[0], chest[-1])</code> → like <code>ruby diamond</code></li>
-      </ul>
-      <div class="ttsbar">
-        <button class="btn ghost" onclick="readBySelector('#explainP2')">🔊 Read this aloud</button>
+      <div class="learnbox" id="why">
+        <h4>Why?</h4>
+        <p>Use a <b>function</b> and a <b>list</b> together.</p>
+
+        <h4>What you’ll type</h4>
+        <ul>
+          <li>Make <code>chest_report(name, chest, new_item)</code> that:</li>
+          <li>① <code>print</code> <b>Hello, NAME!</b> (NAME in <b>UPPERCASE</b>)</li>
+          <li>② <code>chest.append(new_item)</code></li>
+          <li>③ <code>print(chest[0], chest[-1])</code> → like <code>ruby diamond</code></li>
+        </ul>
+        <div class="ttsbar">
+          <button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button>
+        </div>
       </div>
-    </div>
 
-    <div class="hud"><div id="stars" class="badge">⭐ Stars: 0</div><div id="bugs" class="badge bug">🐞 Bugs: 0</div></div>
-
-    <div class="toolbar">
-      <button id="starter" class="btn ghost" type="button">Insert Starter</button>
-      <button id="hintBtn" class="btn ghost" type="button">Show Hint</button>
-      <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
-    </div>
-
-    <textarea id="editor" class="editor" placeholder='Make chest_report(name, chest, new_item) to greet + append + print first/last.'></textarea>
-
-    <p>
-      <button id="run" class="btn" type="button">Run ▶</button>
-      <a class="btn ghost" href="p3_list_chest.html">Next Practice →</a>
-    </p>
-    <pre id="out"></pre>
-
-    <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">
-        <code>def chest_report(name, chest, new_item):</code><br>
-        &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
-        &nbsp;&nbsp;<code>chest.append(new_item)</code><br>
-        &nbsp;&nbsp;<code>print(chest[0], chest[-1])</code>
+      <div class="hud">
+        <div id="stars" class="badge">⭐ Stars: 0</div>
+        <div id="bugs" class="badge bug">🐞 Bugs: 0</div>
       </div>
-    </details>
-    <details id="sol" style="display:none"><summary>Solution (exact)</summary>
-      <pre id="solCode">def chest_report(name, chest, new_item):
-    print("Hello, NAME!")
-    chest.append(NEW)
-    print(chest[0], chest[-1])</pre>
-    </details>
+
+      <div class="toolbar">
+        <button id="fill-start" class="btn">Insert Starter</button>
+        <button id="show-hint" class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
+        <button id="fill-solution" class="btn ghost">Show Solution</button>
+      </div>
+
+      <textarea id="editor" class="editor" placeholder="Type your function here..."></textarea>
+
+      <p>
+        <button id="run" class="btn">Run ▶</button>
+        <a class="btn ghost" href="p3_list_chest.html" style="margin-left:.4rem">Next Practice →</a>
+      </p>
+
+      <pre id="out"></pre>
+
+      <details id="hint" style="margin-top:.6rem">
+        <summary><b>Hint</b></summary>
+        <ul>
+          <li>Say hello with: <code>print("Hello, " + name.upper() + "!")</code></li>
+          <li>Add the gem: <code>chest.append(new_item)</code></li>
+          <li>Print first/last: <code>print(chest[0], chest[-1])</code></li>
+        </ul>
+      </details>
+
+    </div>
   </div>
 
-  <script type="py">
+  <!-- PyScript-like runner (works in Pyodide via PyScript) -->
+  <py-script>
 from js import document, localStorage, window
-from pyodide.ffi import create_proxy
-import io, sys
+import random, re, sys, io
+
+# Randomize the name and the new gem for this run
+names = ["Kai", "Ava", "Milo", "Zoe", "Lia", "Noah", "Ivy", "Owen", "Maya", "Leo"]
+gems  = ["ruby", "diamond", "sapphire", "emerald", "garnet", "opal", "pearl"]
+
+NAME = random.choice(names)
+NEW  = random.choice(gems)
+
+document.getElementById('nm').textContent  = NAME
+document.getElementById('gem').textContent = NEW
 
 def gi(k):
     v = localStorage.getItem(k)
-    try: return int(v) if v is not None else 0
-    except: return 0
+    try:
+        return int(v) if v is not None else 0
+    except Exception:
+        return 0
+
 def setb(stars=None, bugs=None):
     if stars is not None: localStorage.setItem('stars', str(stars))
-    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
-    document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
-    document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
-
-NAME = document.getElementById('targetName').textContent
-NEW  = document.getElementById('newGem').textContent
-
-STARTER = (
-    "def chest_report(name, chest, new_item):\\n"
-    "    # print(\\"Hello, \\" + name + \\"!\\")\\n"
-    "    # chest.append(new_item)\\n"
-    "    # print(chest[0], chest[-1])\\n"
-)
-document.getElementById('solCode').textContent = (
-    "def chest_report(name, chest, new_item):\\n"
-    "    print(\\"Hello, NAME!\\")\\n"
-    "    chest.append(NEW)\\n"
-    "    print(chest[0], chest[-1])"
-)
-
-class Capture:
-    def __enter__(self):
-        self._old = sys.stdout
-        self.buf = io.StringIO()
-        sys.stdout = self.buf
-        return self.buf
-    def __exit__(self, *args):
-        sys.stdout = self._old
-
-def insert_starter(evt): document.getElementById('editor').value = STARTER
-def toggle_hint(evt):
-    h = document.getElementById('hint')
-    h.style.display = 'block' if h.style.display == 'none' else 'none'
-def toggle_sol(evt):
-    s = document.getElementById('sol')
-    s.style.display = 'block' if s.style.display == 'none' else 'none'
+    if bugs is not None: localStorage.setItem('bugs', str(bugs))
+    document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
+    document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
 
 def run(evt):
-    src = document.getElementById('editor').value
-    if not src.strip():
-        document.getElementById('out').textContent = "Type your code first 🙂"; return
     ns = {}
-    try:
-        chest = ["ruby","emerald","sapphire"]
-        with Capture() as cap:
-            exec(src, ns)
-        assert 'chest_report' in ns, "Make a function named chest_report."
-        with Capture() as cap2:
-            ns['chest_report'](NAME, chest, NEW)
-        out = cap2.getvalue().strip()
-        assert NEW in chest, f"Append '{NEW}' to chest."
-        expected = f"Hello, {NAME}!\\nruby {NEW}"
-        document.getElementById('out').textContent = f"Your output:\\n{out}\\n\\nExpected:\\n{expected}"
-        assert out == expected, "Two lines: greeting, then 'ruby NEW'."
-        document.getElementById('out').textContent += "\\n\\nAll checks passed! ⭐"
-        setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
-    except Exception as e:
-        document.getElementById('out').textContent += f"\\n\\nBug found: {e}"
-        setb(bugs=gi('bugs')+1)
+    src = document.getElementById('editor').value
+    out_el = document.getElementById('out')
 
-document.getElementById('starter').addEventListener('click', create_proxy(insert_starter))
-document.getElementById('hintBtn').addEventListener('click', create_proxy(toggle_hint))
-document.getElementById('solBtn').addEventListener('click', create_proxy(toggle_sol))
-document.getElementById('run').addEventListener('click', create_proxy(run))
+    f = io.StringIO()
+    try:
+        # Compile user's code and call their function
+        exec(src, ns)
+        assert 'chest_report' in ns, "Make a function named chest_report(name, chest, new_item)."
+
+        chest = ["ruby", "diamond"]  # initial chest
+        old_stdout = sys.stdout
+        sys.stdout = f
+        try:
+            ns['chest_report'](NAME, chest, NEW)
+        finally:
+            sys.stdout = old_stdout
+
+        output = f.getvalue()
+
+        # 1) Hello, NAME! (uppercase)
+        simplified = re.sub(r'[^A-Z ]', '', output.upper()).replace(',', '')
+        assert ("HELLO " + NAME.upper()) in simplified, "Say 'Hello, NAME!' (NAME in UPPERCASE)."
+
+        # 2) Append happened
+        assert chest[-1] == NEW, "Did you append the new gem to the chest?"
+
+        # 3) Printed first and last items
+        assert (chest[0] in output) and (chest[-1] in output), "Print first and last items of the chest."
+
+        out_el.textContent = "All checks passed! ⭐"
+        setb(stars = gi('stars') + 1)
+        try:
+            window.confetti()
+        except Exception:
+            pass
+
+    except Exception as e:
+        out_el.textContent = "Bug found: " + str(e)
+        setb(bugs = gi('bugs') + 1)
+
+document.getElementById('run').addEventListener('click', run)
+
+# Buttons to fill starter and solution
+STARTER = '''def chest_report(name, chest, new_item):
+    # 1) say hello in UPPERCASE (use name.upper())
+    # 2) add the new_item to the chest (chest.append(...))
+    # 3) print the first and last item (print(chest[0], chest[-1]))
+    pass
+'''
+
+SOLUTION = '''def chest_report(name, chest, new_item):
+    print("Hello, " + name.upper() + "!")
+    chest.append(new_item)
+    print(chest[0], chest[-1])
+'''
+
+def fill_start(evt):
+    document.getElementById('editor').value = STARTER
+
+def fill_solution(evt):
+    document.getElementById('editor').value = SOLUTION
+
+document.getElementById('fill-start').addEventListener('click', fill_start)
+document.getElementById('fill-solution').addEventListener('click', fill_solution)
+
+# init badges
 setb()
-  </script>
+  </py-script>
 </body>
 </html>
