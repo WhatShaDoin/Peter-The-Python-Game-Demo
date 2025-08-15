@@ -11,7 +11,7 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
-    // Pick a random friend name for this run
+    // random friend name
     const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
     const pick = NAMES[Math.floor(Math.random()*NAMES.length)];
     addEventListener('DOMContentLoaded', () => {
@@ -22,6 +22,7 @@
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter says hello">
 
@@ -68,7 +69,7 @@
   <script type="py">
 from js import document, localStorage, window
 from pyodide.ffi import create_proxy
-import io, sys, re
+import io, sys
 
 def gi(k):
     v = localStorage.getItem(k)
@@ -80,7 +81,6 @@ def setb(stars=None, bugs=None):
     document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
     document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
 
-# Build starter/solution with the current random name
 name = document.getElementById('targetName').textContent
 STARTER = f'print("Hello, {name}!")\n'
 document.getElementById('solCode').textContent = STARTER.strip()
