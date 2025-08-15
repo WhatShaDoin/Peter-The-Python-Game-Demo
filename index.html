@@ -28,7 +28,9 @@
         </a>
       </p>
 
-      <div class="grid cols-2" style="margin-top:1rem">
+      <!-- Lessons -->
+      <h3>Lessons</h3>
+      <div class="grid cols-2" style="margin-top:.5rem">
         <div class="card">
           <h3>Lesson 0: Say Hello</h3>
           <p class="small">Why? <code>print()</code> lets Peter talk. First, make him say “Hello, Python!”.</p>
@@ -46,33 +48,45 @@
         </div>
       </div>
 
-      <!-- Mini Glossary (with spaced symbols) -->
-      <div class="learnbox" id="mini-glossary">
-        <h4>Mini Glossary</h4>
+      <!-- Practice Zone -->
+      <h3 style="margin-top:1rem">Practice Zone</h3>
+      <div class="grid cols-2" style="margin-top:.5rem">
+        <div class="card">
+          <h3>Practice 1: Hello friend</h3>
+          <p class="small">Say hello to a random name using <code>print()</code>.</p>
+          <a class="btn" href="exercises/p1_hello_name.html">Start ▶</a>
+        </div>
+        <div class="card">
+          <h3>Practice 2: Add two numbers</h3>
+          <p class="small">Define <code>add(a, b)</code> and print the sum (numbers change each time).</p>
+          <a class="btn" href="exercises/p2_add_random.html">Start ▶</a>
+        </div>
+        <div class="card">
+          <h3>Practice 3: Treasure chest remix</h3>
+          <p class="small">Append a random gem and print the first & last.</p>
+          <a class="btn" href="exercises/p3_list_chest.html">Start ▶</a>
+        </div>
+      </div>
 
+      <!-- Mini Glossary (with spaced symbols) -->
+      <div class="learnbox" id="mini-glossary" style="margin-top:1rem">
+        <h4>Mini Glossary</h4>
         <div class="dl">
           <div class="dt"><span class="sym">( )</span> Parentheses</div>
           <div class="dd">Hold things together or pass things into functions. <em>Memory:</em> Peter’s <b>hands</b>—they hold the stuff!</div>
-
           <div class="dt"><span class="sym">[ ]</span> Square brackets</div>
           <div class="dd">Make a list or get items by spot number. <em>Memory:</em> a <b>treasure chest</b> you can reach into.</div>
-
           <div class="dt"><span class="sym">{ }</span> Curly braces</div>
           <div class="dd">Make a set or dictionary (named boxes). <em>Memory:</em> a <b>toolbox</b> with labeled drawers.</div>
-
           <div class="dt"><span class="sym">: </span> Colon</div>
           <div class="dd">Starts a block (like telling a helper what to do next). <em>Memory:</em> a <b>drum beat</b> before action.</div>
-
           <div class="dt"><span class="sym">return</span></div>
           <div class="dd">Give back an answer from a function. <em>Memory:</em> a <b>boomerang</b>—send work out, answer comes back.</div>
-
           <div class="dt"><span class="sym">print</span></div>
           <div class="dd">Say it on the screen. <em>Memory:</em> Peter’s <b>voice</b>.</div>
-
           <div class="dt"><span class="sym">-1</span></div>
           <div class="dd">The last item in a list. <em>Memory:</em> a <b>back door</b> to the chest.</div>
         </div>
-
         <div class="ttsbar">
           <button class="btn ghost" onclick="readBySelector('#mini-glossary')">🔊 Read this aloud</button>
         </div>
