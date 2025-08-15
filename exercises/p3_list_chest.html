@@ -21,6 +21,7 @@
 <body>
   <div class="card">
     <a href="../index.html">← Back</a>
+    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
     <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with chest">
 
@@ -113,7 +114,6 @@ def run(evt):
         with Capture() as cap: exec(src, ns)
         out = cap.getvalue().strip()
 
-        # Checks
         assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
         assert NEW in ns['gems'], f"Append '{NEW}' to the list."
         parts = out.split()
