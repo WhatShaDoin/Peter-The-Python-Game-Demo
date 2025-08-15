@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 1 — Hello friend</title>
+  <title>Practice 1 — Greet & Add</title>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,11 +11,15 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
-    // random friend name
+    // random name + numbers
     const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
     const pick = NAMES[Math.floor(Math.random()*NAMES.length)];
+    const A = Math.floor(Math.random()*5)+1;  // 1..5
+    const B = Math.floor(Math.random()*5)+1;
     addEventListener('DOMContentLoaded', () => {
       document.getElementById('targetName').textContent = pick;
+      document.getElementById('nA').textContent = A;
+      document.getElementById('nB').textContent = B;
     });
   </script>
 </head>
@@ -26,14 +30,21 @@
 
     <img class="peter-hero" src="../assets/img/peter-lesson1.webp" alt="Peter says hello">
 
-    <h1>Practice 1: Say hello to a friend</h1>
+    <h1>Practice 1: Greet & Add</h1>
 
     <div class="learnbox" id="explainP1">
-      <p>Friend’s name: <b><span id="targetName">Friend</span></b></p>
+      <p>Name: <b><span id="targetName">Friend</span></b> • Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b></p>
       <h4>Why?</h4>
-      <ul class="kids-list"><li><code>print()</code> makes Peter talk.</li></ul>
+      <ul class="kids-list">
+        <li>Combine a <b>function</b> with talking (<code>print()</code>) and a tiny math trick.</li>
+      </ul>
       <h4>What you’ll type</h4>
-      <ul class="kids-list"><li>Type exactly: <code>print("Hello, NAME!")</code></li></ul>
+      <ul class="kids-list">
+        <li>Make <code>greet_add(name, a, b)</code> that prints exactly two lines:<br>
+          ① <code>Hello, NAME!</code><br>
+          ② the sum of <code>a</code> and <code>b</code>
+        </li>
+      </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP1')">🔊 Read this aloud</button>
       </div>
@@ -50,7 +61,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder='Type: print("Hello, NAME!")'></textarea>
+    <textarea id="editor" class="editor" placeholder='Make greet_add(name, a, b) that prints two lines.'></textarea>
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
@@ -59,10 +70,16 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small">Use quotes and parentheses: <code>print("Hello, Ava!")</code> (but use the name you see).</div>
+      <div class="small">
+        <code>def greet_add(name, a, b):</code><br>
+        &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
+        &nbsp;&nbsp;<code>print(a + b)</code>
+      </div>
     </details>
     <details id="sol" style="display:none"><summary>Solution (exact)</summary>
-      <pre id="solCode">print("Hello, NAME!")</pre>
+      <pre id="solCode">def greet_add(name, a, b):
+    print("Hello, NAME!")
+    print(a + b)</pre>
     </details>
   </div>
 
@@ -82,8 +99,19 @@ def setb(stars=None, bugs=None):
     document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
 
 name = document.getElementById('targetName').textContent
-STARTER = f'print("Hello, {name}!")\n'
-document.getElementById('solCode').textContent = STARTER.strip()
+A = int(document.getElementById('nA').textContent)
+B = int(document.getElementById('nB').textContent)
+
+STARTER = (
+    "def greet_add(name, a, b):\n"
+    "    # print(\"Hello, \" + name + \"!\")\n"
+    "    # print(a + b)\n"
+)
+document.getElementById('solCode').textContent = (
+    "def greet_add(name, a, b):\n"
+    "    print(\"Hello, NAME!\")\n"
+    "    print(a + b)"
+)
 
 class Capture:
     def __enter__(self):
@@ -106,16 +134,19 @@ def run(evt):
     src = document.getElementById('editor').value
     if not src.strip():
         document.getElementById('out').textContent = "Type your code first 🙂"; return
+    ns = {}
     try:
-        with Capture() as cap: exec(src, {})
-        out = cap.getvalue().strip()
-        need = f"Hello, {name}!"
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{need}"
-        if out == need:
-            document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
-            setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
-        else:
-            raise Exception("Match the text exactly (letters, commas, exclamation mark).")
+        with Capture() as cap:
+            exec(src, ns)
+        assert 'greet_add' in ns, "Make a function named greet_add."
+        with Capture() as cap2:
+            ns['greet_add'](name, A, B)
+        out = cap2.getvalue().strip()
+        expected = f"Hello, {name}!\n{A+B}"
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        assert out == expected, "Two lines: greeting, then the sum."
+        document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
+        setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
     except Exception as e:
         document.getElementById('out').textContent += f"\n\nBug found: {e}"
         setb(bugs=gi('bugs')+1)
