@@ -4,24 +4,16 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Practice 1 — Greet & Add</title>
-  <meta name="description" content="Make one function that says Hello, NAME! (uppercase) and prints a + b.">
-  <link rel="stylesheet" href="../assets/styles.css?v=3">
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
-  <!-- Read-aloud fallback -->
+  <meta name="description" content="One function prints Hello, NAME! (uppercase) and prints a + b.">
+  <link rel="stylesheet" href="../assets/styles.css?v=5">
+  <link rel="stylesheet" href="https://pyscript.net/latest/cdn/pyscript.css">
+  <script type="module" src="https://pyscript.net/latest/cdn/pyscript.js?v=1"></script>
   <script>
-    window.readBySelector ||= function(sel){
+    window.readBySelector = function(sel){
       const el = document.querySelector(sel); if(!el) return;
-      const text = el.innerText.replace(/\s+/g,' ').trim();
-      if('speechSynthesis' in window){
-        speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-      }
+      const t = el.innerText.replace(/\s+/g,' ').trim();
+      if ('speechSynthesis' in window){ speechSynthesis.cancel(); speechSynthesis.speak(new SpeechSynthesisUtterance(t)); }
     };
-  </script>
-
-  <!-- Starter & solution kept in JS to avoid Python parsing issues -->
-  <script>
     window.P1_STARTER = `def greet_and_add(name, a, b):
     # 1) say Hello, NAME! using name.upper()
     # 2) print the sum of a and b
@@ -32,31 +24,26 @@
     print(a + b)
 `;
   </script>
-
-  <script defer src="../assets/app.js"></script>
 </head>
 <body>
 <div class="container">
   <div class="card" id="card">
     <a href="../index.html">← Back</a>
-    <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
-
-    <!-- Peter image (small, top-right) -->
-    <img class="peter-hero" src="../assets/img/peter-cover.webp" alt="Peter the Python" loading="lazy">
+    <img class="peter-hero" src="../assets/img/peter-cover.webp" alt="Peter" loading="lazy">
 
     <h1>Practice 1: Greet &amp; Add</h1>
     <p><b>Name:</b> <span id="nm">Ava</span> • <b>a:</b> <span id="aa">2</span> • <b>b:</b> <span id="bb">3</span></p>
 
-    <div class="learnbox" id="why">
+    <div id="why" class="learnbox">
       <h4>Why?</h4>
       <p>Practice a single <b>function</b> that prints a greeting and a simple sum.</p>
       <h4>What you’ll type</h4>
       <ul>
         <li>Make <code>greet_and_add(name, a, b)</code> that:</li>
-        <li>① prints <b>Hello, NAME!</b> (NAME in <b>UPPERCASE</b>)</li>
-        <li>② prints the sum <code>a + b</code></li>
+        <li>① prints <b>Hello, NAME!</b> (uppercase)</li>
+        <li>② prints <code>a + b</code></li>
       </ul>
-      <div class="ttsbar"><button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button></div>
+      <button class="btn ghost" onclick="readBySelector('#why')">🔊 Read this aloud</button>
     </div>
 
     <div class="hud">
@@ -66,7 +53,7 @@
 
     <div class="toolbar">
       <button id="fill-start" class="btn">Insert Starter</button>
-      <button id="show-hint" class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
+      <button class="btn ghost" onclick="document.getElementById('hint').open = true">Show Hint</button>
       <button id="fill-solution" class="btn ghost">Show Solution</button>
     </div>
 
@@ -82,8 +69,8 @@
     <details id="hint" style="margin-top:.6rem">
       <summary><b>Hint</b></summary>
       <ul>
-        <li>Say hello: <code>print("Hello, " + name.upper() + "!")</code></li>
-        <li>Show the sum: <code>print(a + b)</code></li>
+        <li><code>print("Hello, " + name.upper() + "!")</code></li>
+        <li><code>print(a + b)</code></li>
       </ul>
     </details>
   </div>
@@ -94,7 +81,7 @@ from js import document, localStorage, window, P1_STARTER, P1_SOLUTION
 import random, re, sys, io
 
 names = ["Kai","Ava","Milo","Zoe","Lia","Noah","Ivy","Owen","Maya","Leo"]
-NAME = random.choice(names); A = random.randint(1,5); B = random.randint(1,5)
+NAME = random.choice(names); A = 2; B = 3
 document.getElementById('nm').textContent = NAME
 document.getElementById('aa').textContent = str(A)
 document.getElementById('bb').textContent = str(B)
@@ -103,10 +90,9 @@ def gi(k):
     v = localStorage.getItem(k)
     try: return int(v) if v is not None else 0
     except: return 0
-
 def setb(stars=None, bugs=None):
     if stars is not None: localStorage.setItem('stars', str(stars))
-    if bugs is not None: localStorage.setItem('bugs', str(bugs))
+    if bugs  is not None: localStorage.setItem('bugs',  str(bugs))
     document.getElementById('stars').textContent = f'⭐ Stars: {gi("stars")}'
     document.getElementById('bugs').textContent  = f'🐞 Bugs: {gi("bugs")}'
 
@@ -123,7 +109,7 @@ def run(evt):
         simple = re.sub(r'[^A-Z0-9 !+-]', '', output.upper())
         assert ("HELLO " + NAME.upper() + "!") in simple, "Say 'Hello, NAME!' (uppercase)."
         assert str(A+B) in simple, "Print the sum of a and b."
-        out_el.textContent = "All checks passed! ⭐"
+        out_el.textContent = "All checks passed! ⭐\n" + output
         setb(stars=gi('stars')+1)
         try: window.confetti()
         except: pass
@@ -132,15 +118,10 @@ def run(evt):
         setb(bugs=gi('bugs')+1)
 
 document.getElementById('run').addEventListener('click', run)
-def fill_start(evt): document.getElementById('editor').value = P1_STARTER
-def fill_solution(evt): document.getElementById('editor').value = P1_SOLUTION
-document.getElementById('fill-start').addEventListener('click', fill_start)
-document.getElementById('fill-solution').addEventListener('click', fill_solution)
-
-# Auto-show starter if editor is empty (so kids see it immediately)
+document.getElementById('fill-start').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P1_STARTER))
+document.getElementById('fill-solution').addEventListener('click', lambda e: setattr(document.getElementById('editor'), 'value', P1_SOLUTION))
 if not document.getElementById('editor').value:
     document.getElementById('editor').value = P1_STARTER
-
 setb()
 </py-script>
 </body>
