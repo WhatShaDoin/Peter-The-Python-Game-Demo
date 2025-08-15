@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Practice 3 — Treasure chest remix</title>
+  <title>Practice 3 — Math Treasure</title>
 
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.6.1/core.css">
@@ -11,10 +11,15 @@
   <script defer src="../assets/app.js"></script>
 
   <script>
+    // random name + numbers
+    const NAMES = ["Ava","Max","Luna","Kai","Zoe","Milo","Noah","Mia","Leo","Emma"];
+    const namePick = NAMES[Math.floor(Math.random()*NAMES.length)];
+    const A = Math.floor(Math.random()*6)+1;
+    const B = Math.floor(Math.random()*6)+1;
     addEventListener('DOMContentLoaded', () => {
-      const NEWS = ["diamond","pearl","amethyst","opal","topaz","garnet"];
-      const item = NEWS[Math.floor(Math.random()*NEWS.length)];
-      document.getElementById('newItem').textContent = item;
+      document.getElementById('targetName').textContent = namePick;
+      document.getElementById('nA').textContent = A;
+      document.getElementById('nB').textContent = B;
     });
   </script>
 </head>
@@ -23,17 +28,24 @@
     <a href="../index.html">← Back</a>
     <a class="btn" style="float:right" href="https://YOUR-PRO-URL.pages.dev/" target="_blank" rel="noopener">Go Pro ▶</a>
 
-    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter with chest">
+    <img class="peter-hero" src="../assets/img/peter-lesson2.webp" alt="Peter solves treasure math">
 
-    <h1>Practice 3: Treasure chest remix</h1>
+    <h1>Practice 3: Math Treasure</h1>
 
     <div class="learnbox" id="explainP3">
-      <p>Add this new gem: <b><span id="newItem">diamond</span></b></p>
+      <p>Name: <b><span id="targetName">Friend</span></b> • Numbers: <b><span id="nA">2</span></b> and <b><span id="nB">3</span></b> • Chest starts with <code>["ruby","emerald","sapphire"]</code></p>
       <h4>Why?</h4>
-      <ul class="kids-list"><li>A list is a treasure chest—we can add items and peek inside.</li></ul>
+      <ul class="kids-list">
+        <li>Use a helper <b>function</b> to add, say the result, and work with a <b>list</b>.</li>
+      </ul>
       <h4>What you’ll type</h4>
       <ul class="kids-list">
-        <li>Make a list of 3 gems, <code>append</code> the new gem (shown above), then <code>print</code> first and last.</li>
+        <li>Make <code>add(a, b)</code> that <b>prints</b> the sum.</li>
+        <li>Make <code>math_treasure(name, a, b)</code> that:<br>
+          ① prints <code>Hello, NAME!</code><br>
+          ② calls <code>add(a, b)</code> (so the sum prints)<br>
+          ③ makes a list, appends <code>"diamond"</code>, then prints first &amp; last (like <code>ruby diamond</code>)
+        </li>
       </ul>
       <div class="ttsbar">
         <button class="btn ghost" onclick="readBySelector('#explainP3')">🔊 Read this aloud</button>
@@ -51,7 +63,7 @@
       <button id="solBtn" class="btn ghost" type="button">Show Solution</button>
     </div>
 
-    <textarea id="editor" class="editor" placeholder='# Make a list, append NEW, print first & last'></textarea>
+    <textarea id="editor" class="editor" placeholder='Make add(), then math_treasure() that greets, prints sum, and prints ruby diamond.'></textarea>
 
     <p>
       <button id="run" class="btn" type="button">Run ▶</button>
@@ -60,12 +72,26 @@
     <pre id="out"></pre>
 
     <details id="hint" style="display:none"><summary>Hint</summary>
-      <div class="small"><code>gems = ["ruby","emerald","sapphire"]</code> → <code>gems.append("NEW")</code> → <code>print(gems[0], gems[-1])</code></div>
+      <div class="small">
+        <code>def add(a, b):</code> <code>print(a + b)</code><br>
+        <code>def math_treasure(name, a, b):</code><br>
+        &nbsp;&nbsp;<code>print("Hello, " + name + "!")</code><br>
+        &nbsp;&nbsp;<code>add(a, b)</code><br>
+        &nbsp;&nbsp;<code>gems = ["ruby","emerald","sapphire"]</code><br>
+        &nbsp;&nbsp;<code>gems.append("diamond")</code><br>
+        &nbsp;&nbsp;<code>print(gems[0], gems[-1])</code>
+      </div>
     </details>
     <details id="sol" style="display:none"><summary>Solution (exact)</summary>
-      <pre id="solCode">gems = ["ruby", "emerald", "sapphire"]
-gems.append("NEW")
-print(gems[0], gems[-1])</pre>
+      <pre id="solCode">def add(a, b):
+    print(a + b)
+
+def math_treasure(name, a, b):
+    print("Hello, NAME!")
+    add(a, b)
+    gems = ["ruby", "emerald", "sapphire"]
+    gems.append("diamond")
+    print(gems[0], gems[-1])</pre>
     </details>
   </div>
 
@@ -84,9 +110,30 @@ def setb(stars=None, bugs=None):
     document.getElementById('stars').textContent = f"⭐ Stars: {gi('stars')}"
     document.getElementById('bugs').textContent  = f"🐞 Bugs: {gi('bugs')}"
 
-NEW = document.getElementById('newItem').textContent
-STARTER = f'gems = ["ruby", "emerald", "sapphire"]\n# TODO: append "{NEW}" then print first and last\n# print(gems[0], gems[-1])\n'
-document.getElementById('solCode').textContent = f'gems = ["ruby", "emerald", "sapphire"]\ngems.append("{NEW}")\nprint(gems[0], gems[-1])'
+NAME = document.getElementById('targetName').textContent
+A = int(document.getElementById('nA').textContent)
+B = int(document.getElementById('nB').textContent)
+
+STARTER = (
+    "def add(a, b):\n"
+    "    # print(a + b)\n\n"
+    "def math_treasure(name, a, b):\n"
+    "    # print(\"Hello, \" + name + \"!\")\n"
+    "    # add(a, b)\n"
+    "    # gems = [\"ruby\", \"emerald\", \"sapphire\"]\n"
+    "    # gems.append(\"diamond\")\n"
+    "    # print(gems[0], gems[-1])\n"
+)
+document.getElementById('solCode').textContent = (
+    "def add(a, b):\n"
+    "    print(a + b)\n\n"
+    "def math_treasure(name, a, b):\n"
+    "    print(\"Hello, NAME!\")\n"
+    "    add(a, b)\n"
+    "    gems = [\"ruby\", \"emerald\", \"sapphire\"]\n"
+    "    gems.append(\"diamond\")\n"
+    "    print(gems[0], gems[-1])"
+)
 
 class Capture:
     def __enter__(self):
@@ -95,6 +142,7 @@ class Capture:
         sys.stdout = self.buf
         return self.buf
     def __exit__(self, *args):
+        self._old.flush() if hasattr(self._old,'flush') else None
         sys.stdout = self._old
 
 def insert_starter(evt): document.getElementById('editor').value = STARTER
@@ -109,18 +157,21 @@ def run(evt):
     src = document.getElementById('editor').value
     if not src.strip():
         document.getElementById('out').textContent = "Type your code first 🙂"; return
+    ns = {}
     try:
-        ns = {}
-        with Capture() as cap: exec(src, ns)
-        out = cap.getvalue().strip()
+        with Capture() as cap:
+            exec(src, ns)
+        # require both functions
+        assert 'add' in ns and callable(ns['add']), "Make add(a,b)."
+        assert 'math_treasure' in ns and callable(ns['math_treasure']), "Make math_treasure(name,a,b)."
+        # call math_treasure and capture all printing
+        with Capture() as cap2:
+            ns['math_treasure'](NAME, A, B)
+        out = cap2.getvalue().strip()
 
-        assert 'gems' in ns and isinstance(ns['gems'], list), "Need a list named gems."
-        assert NEW in ns['gems'], f"Append '{NEW}' to the list."
-        parts = out.split()
-        need = f"ruby {NEW}"
-        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{need}"
-        assert len(parts) >= 2 and parts[0].lower()=='ruby' and parts[-1].lower()==NEW.lower(), \
-              "Print first and last: ruby NEW"
+        expected = f"Hello, {NAME}!\n{A+B}\nruby diamond"
+        document.getElementById('out').textContent = f"Your output:\n{out}\n\nExpected:\n{expected}"
+        assert out == expected, "Three lines: greeting, sum, then 'ruby diamond'."
 
         document.getElementById('out').textContent += "\n\nAll checks passed! ⭐"
         setb(stars=gi('stars')+1); window.launchConfetti(); window.playConfettiSound()
